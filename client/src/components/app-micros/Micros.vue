@@ -1,0 +1,63 @@
+<template>
+  <div>
+    <div
+      v-for="(value, key) in micros"
+      :key="key"
+      class="columns is-mobile">
+      <div class="column is-3 has-text-right-desktop">
+        <p>{{ key | capitalize }}</p>
+      </div>
+      <div class="column">
+        <div class="bar-surround">
+          <div
+            class="bar"
+            :style="{ width: `${value}%` }"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+export default {
+  props: {
+    microType: {
+      type: String,
+      required: true
+    },
+    currentFood: {
+      type: String,
+      required: true
+    }
+  },
+  computed: {
+    micros () {
+      let swaps = this.$store.state.swaps[this.currentFood]
+      return swaps
+        ? swaps.micros[this.microType]
+        : this.$store.state.targetFood.micros[this.microType]
+    }
+  }
+}
+</script>
+<style scoped>
+.bar-surround {
+  width: 90%;
+  background: #eee;
+  height: 26px
+}
+.bar {
+  color: white;
+  background: #00D1B2;
+  height: 100%;
+  text-align: center;
+  transition: width 500ms ease;
+  max-width: 100%
+}
+.columns {
+  margin-top: -0.75rem !important;
+}
+
+.hidden {
+  visibility: hidden;
+}
+</style>

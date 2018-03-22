@@ -1,0 +1,20 @@
+{
+  "crisps": [
+    "almonds",
+    "popcorn",
+    "carrot",
+    "apple"
+  ],
+  "doughnut": [
+    "chocolate",
+    "almonds",
+    "apple",
+    "banana"
+  ],
+  "cookies": [
+    "almonds",
+    "chocolate",
+    "banana",
+    "carrot"
+  ]
+}
