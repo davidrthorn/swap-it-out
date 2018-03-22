@@ -9,9 +9,9 @@ app.use(bodyParser.json())
 // SECURITY WARNING: CORS
 app.use(cors())
 
-app.get('/status', (req, res) => {
+app.get('/:id', (req, res) => {
   res.send({
-    message: `This is my response y'all`
+    food: req.params.id
   })
 })
 

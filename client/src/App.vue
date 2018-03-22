@@ -44,6 +44,8 @@ import Macros from './components/app-macros/Macros.vue'
 import Calories from './components/app-calories/Calories.vue'
 import Qual from './components/app-qual/Qual.vue'
 
+import axios from 'axios'
+
 import { createDataStore } from './store/create'
 
 export default {
@@ -60,6 +62,12 @@ export default {
       initialFood: 'crisps',
       currentFood: 'crisps'
     }
+  },
+  mounted () {
+    let reqFood = this.$route.params.id || 'crisps'
+    axios.get(`http://localhost:8081/${reqFood}`).then(response => {
+      this.setInitialFood(response.data.food)
+    })
   },
   methods: {
     setInitialFood (food) {
