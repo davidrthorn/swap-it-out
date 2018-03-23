@@ -6,6 +6,6 @@ const db = require('./queries')
 
 app.use(bodyParser.json())
 
-app.get('/api/:id', db.getSingleFood)
+app.get('/api/:id', db.getFoodByID)
 
 app.listen(process.env.PORT || 8081)
