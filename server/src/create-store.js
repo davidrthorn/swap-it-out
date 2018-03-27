@@ -1,13 +1,35 @@
-// TODO
-// RDAS TO BE DONE CLIENTSIDE.
-// 1. Hone the SQL query
-// 2. Calculate portions
-// 3. Build object
-//    a. Convert to portions
-//    b. Split into target and swaps
-
+const swaps = require('./swaps')
 module.exports = {
-  createStore (portionData, nutData) {
-    return nutData
+  createStore (foodID, portionData, nutData) {
+    let store = {}
+
+    store.targetFood = foodID
+    store.swaps = swaps[foodID]
+
+    for (let id of swaps[foodID]) {
+      // Create object for individual food
+      store[id] = {}
+
+      // Create and populate portions object
+      let medPortions = {}
+
+      portionData.forEach(p => {
+        if (p.ndb_no === id) {
+          medPortions[p.med_portion] = parseInt(p.gm_wgt)
+          store[id].name = p.long_desc
+        }
+      })
+
+      store[id].medPortions = medPortions
+
+      // Create and populate nutrition object
+      let nutrition = {}
+      for (let nutr of nutData) {
+        if (nutr.ndb_no === id) nutrition[nutr.nutr_no] = parseInt(nutr.nutr_val)
+      }
+      store[id].nutrition = nutrition
+    }
+
+    return store
   }
 }

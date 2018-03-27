@@ -46,8 +46,6 @@ import Qual from './components/app-qual/Qual.vue'
 
 import axios from 'axios'
 
-import { createDataStore } from './store/create'
-
 export default {
   components: {
     appNavbar: Navbar,
@@ -64,16 +62,16 @@ export default {
     }
   },
   mounted () {
-    let reqFood = this.$route.params.id || 'crisps'
-    axios.get(`http://localhost:8081/${reqFood}`).then(response => {
-      this.setInitialFood(response.data.food)
+    let reqFood = this.$route.params.id || '19411'
+    axios.get(`http://localhost:8081/api/${reqFood}`).then(response => {
+      let data = response.data.data
+      console.log(data)
     })
   },
   methods: {
     setInitialFood (food) {
       this.initialFood = food
       this.currentFood = food
-      this.$store.replaceState(createDataStore(food))
     }
   }
 }
