@@ -43,6 +43,7 @@ import Micros from './components/app-micros/Micros.vue'
 import Macros from './components/app-macros/Macros.vue'
 import Calories from './components/app-calories/Calories.vue'
 import Qual from './components/app-qual/Qual.vue'
+import { createStore } from '@/store/create'
 
 import axios from 'axios'
 
@@ -65,7 +66,7 @@ export default {
     let reqFood = this.$route.params.id || '19411'
     axios.get(`http://localhost:8081/api/${reqFood}`).then(response => {
       let data = response.data.data
-      console.log(data)
+      createStore(data)
     })
   },
   methods: {
