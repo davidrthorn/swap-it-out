@@ -17,30 +17,29 @@
 // *Normalization should have an upper limit denoted by grams.
 // No portion should be hundreds of grams in the event that no medium portion
 // is available.
+export default {
+  portionData (data) {
+    let foods = data.foods
+    let targetID = data.targetID
 
-export function createStore (data) {
-  console.log(data)
-  let foods = data.foods
-  let targetID = data.targetID
+    const portions = determinePortion(targetID, foods)
+    let portionedData = {}
+    portionedData.foods = {}
 
-  const portions = determinePortion(targetID, foods)
-  let portionedData = {}
-  portionedData.foods = {}
-
-  for (let food in foods) {
-    let portion = portions[food]
-    portionedData.foods[food] = {}
-    for (let nutr in foods[food].nutrition) {
-      portionedData.foods[food][nutr] = foods[food].nutrition[nutr] * portion / 100
+    for (let food in foods) {
+      let portion = portions[food]
+      portionedData.foods[food] = {}
+      for (let nutr in foods[food].nutrition) {
+        portionedData.foods[food][nutr] = foods[food].nutrition[nutr] * portion / 100
+      }
     }
+    return portionedData
   }
-  console.log(portionedData)
 }
-
 
 function determinePortion (targetID, foods) {
   let portions = {}
-  let nut = (ID) => foods[ID].nutrition
+  let nut = ID => foods[ID].nutrition
   let targetCals = Math.round(nut(targetID)['208'] * 28 / 100) // THIS IS HARDCODED PORTION
 
   for (let id in foods) {

@@ -36,6 +36,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 // Components
 import Navbar from './components/app-navbar/Navbar.vue'
 import Details from './components/app-details/Details.vue'
@@ -43,9 +44,10 @@ import Micros from './components/app-micros/Micros.vue'
 import Macros from './components/app-macros/Macros.vue'
 import Calories from './components/app-calories/Calories.vue'
 import Qual from './components/app-qual/Qual.vue'
-import { createStore } from '@/store/create'
 
 import axios from 'axios'
+
+import { createStore } from '@/store/index'
 
 export default {
   components: {
@@ -64,16 +66,10 @@ export default {
   },
   mounted () {
     let reqFood = this.$route.params.id || '19411'
-    axios.get(`http://localhost:8081/api/${reqFood}`).then(response => {
-      let data = response.data.data
-      createStore(data)
+    axios.get(`http://localhost:8081/api/${reqFood}`).then(res => {
+      this.$store.commit('updatePortions', res.data.data)
+      this.$store.commit('setTarget', res.data.data)
     })
-  },
-  methods: {
-    setInitialFood (food) {
-      this.initialFood = food
-      this.currentFood = food
-    }
   }
 }
 </script>
