@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 const swaps = require('./swaps')
 module.exports = {
   createStore (foodID, portionData, nutData) {
@@ -31,6 +33,28 @@ module.exports = {
       store.foods[id].nutrition = nutrition
     }
 
-    return store
+    return longDesc('Snacks, potato chips, blah, some more info')
+  }
+}
+
+function longDesc (desc) {
+  let categories = [
+    'Snacks',
+    'Babyfood',
+    'Nuts',
+    'Seeds'
+  ]
+
+  let reCat = new RegExp (`(${categories.join('|')}), (.*?),`)
+
+  let matchCat = desc.match(reCat) 
+
+  let foodName = matchCat ? matchCat[2] : desc.match(/(.+?),/)[1].toLowerCase()
+  let reDetails = new RegExp(`.*${foodName}, (.*)`, 'i')
+  let foodDetails = desc.match(reDetails)[1]
+
+  return {
+    foodName: foodName,
+    foodDesc: foodDesc
   }
 }
