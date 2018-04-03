@@ -33,15 +33,15 @@
       <div
         class="sub-fat"
         style="background: lightcoral"
-        :style="{ height: `${100 * macros.sat / totalFatCurrent}%` }"/>
+        :style="{ height: `${100 * macros[currentId].saturated / totalFatCurrent}%` }"/>
       <div
         class="sub-fat"
         style="background: skyblue"
-        :style="{ height: `${100 * macros.mono / totalFatCurrent}%` }"/>
+        :style="{ height: `${100 * macros[currentId].monounsaturated / totalFatCurrent}%` }"/>
       <div
         class="sub-fat"
         style="background: lightsalmon"
-        :style="{ height: `${100 * macros.poly / totalFatCurrent}%` }"/>
+        :style="{ height: `${100 * macros[currentId].polyunsaturated / totalFatCurrent}%` }"/>
     </div>
     <div
       class="reference"
@@ -50,19 +50,19 @@
     <div
       class="bar"
       id="protein-bar"
-      :style="{ height: `${barHeight(macros.protein)}%`, bottom: `${rowHeight / 2}%` }"/>
+      :style="{ height: `${barHeight(macros[currentId].protein)}%`, bottom: `${rowHeight / 2}%` }"/>
     <div
       class="reference"
       id="protein-reference"
-      :style="{ bottom: `${rowHeight / 2 + barHeight(initial.protein)}%` }"/>
+      :style="{ bottom: `${rowHeight / 2 + barHeight(macros[targetId].protein)}%` }"/>
     <div
       class="bar"
       id="carb-bar"
-      :style="{ height: `${barHeight(macros.carbs)}%`, bottom: `${rowHeight / 2}%` }"/>
+      :style="{ height: `${barHeight(macros[currentId].carbs)}%`, bottom: `${rowHeight / 2}%` }"/>
     <div
       class="reference"
       id="carb-reference"
-      :style="{ bottom: `${rowHeight / 2 + barHeight(initial.carbs)}%` }"/>
+      :style="{ bottom: `${rowHeight / 2 + barHeight(macros[targetId].carbs)}%` }"/>
 
   </div>
 </template>
@@ -70,38 +70,37 @@
 <script>
 export default {
   props: {
-    initial: {
-      type: Object,
+    targetId: {
+      type: String,
       required: true
     },
-    macros: {
-      type: Object,
+    currentId: {
+      type: String,
       required: true
     }
   },
   computed: {
+    macros () {
+      return this.$store.state.macros
+    },
     totalFatCurrent () {
-      return this.macros.sat + this.macros.mono + this.macros.poly
+      let m = this.macros[this.currentId]
+      return m.saturated + m.monounsaturated + m.polyunsaturated
     },
     totalFatInitial () {
-      return this.initial.sat + this.initial.mono + this.initial.poly
+      let m = this.macros[this.targetId]
+      return m.saturated + m.monounsaturated + m.polyunsaturated
     },
     rows () {
-      let swaps = this.$store.state.swaps
-      let macroValues = []
-      const addToMacro = food => {
-        let totalFat = food.sat + food.mono + food.mono
-        macroValues.push(
-          totalFat,
-          food.protein,
-          food.carbs
-        )
+      let m = this.macros
+      let maxMacros = 0
+
+      for (let id in m) {
+        for (let macro in m[id]) {
+          maxMacros = m[id][macro] > maxMacros ? m[id][macro] : maxMacros
+        }
       }
-
-      addToMacro(this.initial)
-      for (let swap in swaps) addToMacro(swaps[swap].macros)
-
-      return Math.ceil(Math.max(...macroValues) / 10)
+      return Math.ceil(maxMacros / 10)
     },
     rowHeight () {
       return 100 / (this.rows + 1)

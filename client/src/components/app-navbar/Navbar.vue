@@ -19,8 +19,8 @@
             <div class="dropdown-content">
               <a
                 class="dropdown-item"
-                v-for="(value, key) in allTargets"
-                :key="'allTargets_' + key"
+                v-for="(value, key) in targets"
+                :key="'targets_' + key"
                 @click="changeInitial(key)">
                 {{ value | capitalize }}
               </a>
@@ -29,9 +29,9 @@
         </div>
         <div
           class="button is-large"
+          :class="{ 'is-primary': key === currentId }"
           v-for="(value, key) in swaps"
           :key="'current_' + key"
-          :class="{ 'is-primary': key === currentId }"
           @click="changeCurrent(key)">
           {{ value.name | capitalize }}
         </div>
@@ -70,7 +70,7 @@ export default {
       }
       return swaps
     },
-    allTargets () {
+    targets () {
       let targets = {}
       for (let target in this.targetFoods) {
         targets[target] = this.targetFoods[target].name

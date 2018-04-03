@@ -10,11 +10,12 @@
     <app-details
       :current-id="currentId"
       class="details"/>
-      <!--
     <div class="columns">
       <app-macros
         class="column is-5"
+        :target-id="targetId"
         :current-id="currentId"/>
+        <!--
       <div class="column">
         <div class="columns">
           <app-micros
@@ -31,7 +32,9 @@
           <app-qual class="column is-10"/>
         </div>
       </div>
+    -->
     </div>
+    <!--
     <app-calories
     :current-id="currentId"/>
     -->
@@ -42,10 +45,10 @@
 // Components
 import Navbar from './components/app-navbar/Navbar.vue'
 import Details from './components/app-details/Details.vue'
-import Micros from './components/app-micros/Micros.vue'
 import Macros from './components/app-macros/Macros.vue'
-import Calories from './components/app-calories/Calories.vue'
+import Micros from './components/app-micros/Micros.vue'
 import Qual from './components/app-qual/Qual.vue'
+import Calories from './components/app-calories/Calories.vue'
 
 import axios from 'axios'
 
@@ -55,10 +58,10 @@ export default {
   components: {
     appNavbar: Navbar,
     appDetails: Details,
-    appMicros: Micros,
     appMacros: Macros,
-    appCalories: Calories,
-    appQual: Qual
+    appMicros: Micros,
+    appQual: Qual,
+    appCalories: Calories
   },
   data () {
     return {

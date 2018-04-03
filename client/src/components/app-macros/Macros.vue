@@ -2,12 +2,15 @@
   <div>
     <div>
       <app-bar
-        :initial="initial"
-        :macros="macros"/>
+        :target-id="targetId"
+        :current-id="currentId"/>
     </div>
+    <!--
     <app-quant
-      :macros="macros"
+      :initial="initial"
+      :current-macros="macros[currentId]"
       style="margin-top: 24px"/>
+    -->
   </div>
 </template>
 <script>
@@ -20,18 +23,13 @@ export default {
     appQuant: Quant
   },
   props: {
-    currentFood: {
+    targetId: {
       type: String,
       required: true
-    }
-  },
-  computed: {
-    macros () {
-      let swap = this.$store.state.swaps[this.currentFood]
-      return swap ? swap.macros : this.$store.state.targetFood.macros
     },
-    initial () {
-      return this.$store.state.targetFood.macros
+    currentId: {
+      type: String,
+      required: true
     }
   }
 }
