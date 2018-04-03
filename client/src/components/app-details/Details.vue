@@ -2,10 +2,11 @@
   <div class="columns">
     <div class="column">
       <span class="is-subtitle is-size-3 has-text-grey-dark">
-        {{ portion }}g <span v-show="foodDescription.length">&ndash;</span>
+        {{ portion }}g
+        <span v-show="details.length">&ndash;</span>
       </span>
       <span class="is-subtitle is-size-3 has-text-grey-dark">
-        {{ foodDescription }}
+        {{ details }}
       </span>
     </div>
   </div>
@@ -14,17 +15,24 @@
 <script>
 export default {
   props: {
-    currentFood: {
+    current: {
       type: String,
       required: true
     }
   },
   computed: {
-    portion () {
-      return this.$store.state.swaps.foods[this.currentFood].portion
+    desc () {
+      return this.$store.state.descriptions
     },
-    foodDescription () {
-      return this.$store.state.swaps.foods[this.currentFood].description
+    portion () {
+      return this.current in this.desc
+        ? this.desc[this.current].portion
+        : 0
+    },
+    details () {
+      return this.current in this.desc
+        ? this.desc[this.current].details
+        : ''
     }
   }
 }

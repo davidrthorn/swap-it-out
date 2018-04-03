@@ -7,9 +7,11 @@
       :current-food="currentFood"
       @currentChanged="currentFood = $event"
       @initialChanged="requestFood($event)"/>
+    -->
     <app-details
-      :current-food="currentFood"
+      :current="currentFood"
       class="details"/>
+      <!--
     <div class="columns">
       <app-macros
         class="column is-5"
