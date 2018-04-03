@@ -2,13 +2,10 @@
   <div class="columns">
     <div class="column">
       <span class="is-subtitle is-size-3 has-text-grey-dark">
-        {{ details[0] }}g &ndash;
+        {{ portion }}g <span v-show="foodDescription.length">&ndash;</span>
       </span>
       <span class="is-subtitle is-size-3 has-text-grey-dark">
-        {{ details[1] }}<span v-show="details[1].length">,</span>
-      </span>
-      <span class="is-subtitle is-size-3 has-text-grey-dark">
-        {{ details[2] }}
+        {{ foodDescription }}
       </span>
     </div>
   </div>
@@ -23,12 +20,11 @@ export default {
     }
   },
   computed: {
-    details () {
-      let state = this.$store.state
-      let swap = state.swaps[this.currentFood]
-      return swap
-        ? [swap.portion, ...Object.values(swap.details)]
-        : [state.targetFood.portion, ...Object.values(state.targetFood.details)]
+    portion () {
+      return this.$store.state.swaps.foods[this.currentFood].portion
+    },
+    foodDescription () {
+      return this.$store.state.swaps.foods[this.currentFood].description
     }
   }
 }

@@ -1,20 +1,42 @@
 {
-  "crisps": [
-    "almonds",
-    "popcorn",
-    "carrot",
-    "apple"
+  "19411": {
+    "name": "potato chips",
+    "swaps": [
+      "12061",
+      "18216",
+      "11124",
+      "25071"
+    ],
+    "portion": 30
+  },
+  "18151": {
+    "name": "brownies",
+    "swaps": [
+    "09040",
+    "09298",
+    "19822",
+    "19903"
   ],
-  "doughnut": [
-    "chocolate",
-    "almonds",
-    "apple",
-    "banana"
-  ],
-  "cookies": [
-    "almonds",
-    "chocolate",
-    "banana",
-    "carrot"
-  ]
+  "portion": 75
+  },
+  "19120": {
+    "name": "chocolate",
+    "swaps": [
+      "01297",
+      "09236",
+      "09421",
+      "19903"
+    ],
+    "portion": 45
+  },
+  "18274": {
+    "name": "muffin",
+    "swaps": [
+      "09032",
+      "09050",
+      "12142",
+      "18047"
+    ],
+    "portion": 113
+  }
 }

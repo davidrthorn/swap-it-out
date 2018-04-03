@@ -5,10 +5,11 @@
     <app-navbar
       :current-food="currentFood"
       @currentChanged="currentFood = $event"
-      @initialChanged="setInitialFood($event)"/>
+      @initialChanged="requestFood($event)"/>
     <app-details
       :current-food="currentFood"
       class="details"/>
+      <!--
     <div class="columns">
       <app-macros
         class="column is-5"
@@ -32,11 +33,11 @@
     </div>
     <app-calories
     :current-food="currentFood"/>
+    -->
   </div>
 </template>
 
 <script>
-/* eslint-disable */
 // Components
 import Navbar from './components/app-navbar/Navbar.vue'
 import Details from './components/app-details/Details.vue'
@@ -47,7 +48,7 @@ import Qual from './components/app-qual/Qual.vue'
 
 import axios from 'axios'
 
-import { createStore } from '@/store/index'
+import targetFoods from '@/data/target-foods.json'
 
 export default {
   components: {
@@ -60,16 +61,24 @@ export default {
   },
   data () {
     return {
-      initialFood: 'crisps',
-      currentFood: 'crisps'
+      targetFoods: targetFoods,
+      currentFood: '19411'
     }
   },
-  mounted () {
+  created () {
     let reqFood = this.$route.params.id || '19411'
-    axios.get(`http://localhost:8081/api/${reqFood}`).then(res => {
-      this.$store.commit('updatePortions', res.data.data)
-      this.$store.commit('setTarget', res.data.data)
-    })
+    this.requestFood(reqFood)
+  },
+  methods: {
+    requestFood (id) {
+      let foods = [id, ...this.targetFoods[id].swaps].join('_')
+      axios.get(`http://localhost:8081/api/food?foods=${foods}`).then(res => {
+        this.$store.commit('updatePortions', {
+          targetID: id,
+          foods: res.data.data
+        })
+      })
+    }
   }
 }
 </script>

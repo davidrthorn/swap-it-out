@@ -1,49 +1,41 @@
-/* eslint-disable */
-
-// --n2k--
-// each calorie density
-// each whether exists medium portion
-// target calories
-//
-// --decisions--
-// If there is no medium portion, normalize*.
-//
-// If medium portion *but* medium portion calories is within RANGE of target calories, normalize*.
-//  Else determine the appropriate medium portion.
-//
-//
-//
-// -------------
-// *Normalization should have an upper limit denoted by grams.
-// No portion should be hundreds of grams in the event that no medium portion
-// is available.
+import targetFoods from '@/data/target-foods.json'
 export default {
-  portionData (data) {
-    let foods = data.foods
-    let targetID = data.targetID
+  portionData: portionData
+}
 
-    const portions = determinePortion(targetID, foods)
-    let portionedData = {}
-    portionedData.foods = {}
-
-    for (let food in foods) {
-      let portion = portions[food]
-      portionedData.foods[food] = {}
-      for (let nutr in foods[food].nutrition) {
-        portionedData.foods[food][nutr] = foods[food].nutrition[nutr] * portion / 100
-      }
-    }
-    return portionedData
+function portionData (targetID, foods) {
+  const portions = determinePortion(targetID, foods)
+  let portionedData = {
+    targetID: targetID
   }
+  portionedData.foods = {}
+
+  for (let food in foods) {
+    let portion = portions[food]
+    portionedData.foods[food] = {
+      name: foods[food].name,
+      description: foods[food].description,
+      portion: portion,
+      nutrition: {}
+    }
+    for (let nutr in foods[food].nutrition) {
+      portionedData.foods[food].nutrition[nutr] = foods[food].nutrition[nutr] * portion / 100
+    }
+  }
+  return portionedData
 }
 
 function determinePortion (targetID, foods) {
   let portions = {}
   let nut = ID => foods[ID].nutrition
-  let targetCals = Math.round(nut(targetID)['208'] * 28 / 100) // THIS IS HARDCODED PORTION
+  let targetPortion = targetFoods[targetID].portionWgt
+  let targetCals = Math.round(nut(targetID)['calories'] * targetPortion / 100)
+
+  portions[targetID] = targetPortion
 
   for (let id in foods) {
-    let cals = nut(id)['208']
+    if (id === targetID) continue
+    let cals = nut(id)['calories']
     let meds = foods[id].medPortions
 
     portions[id] = meds
@@ -54,4 +46,3 @@ function determinePortion (targetID, foods) {
   }
   return portions
 }
-

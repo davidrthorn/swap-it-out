@@ -1,19 +1,19 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import Store from '@/store/create'
+import controllers from '@/store/controllers'
 
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
-    portioned: {}
+    swaps: {}
   },
   mutations: {
     updatePortions (state, data) {
-      state.portioned = Store.portionData(data)
+      state.swaps = controllers.portionData(data.targetID, data.foods.foods)
     },
-    setTarget (state, data) {
-      state.targetID = data.targetID
+    setTarget (state, targetID) {
+      state.targetID = targetID
     }
   }
 })

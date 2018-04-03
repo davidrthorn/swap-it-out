@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import metData from '../../data/met.json'
+import metData from '../../data/met-values.json'
 
 export default {
   props: {

@@ -55,19 +55,24 @@ function getDetails (desc) {
     'Snacks',
     'Babyfood',
     'Nuts',
-    'Seeds'
+    'Seeds',
+    'Crackers'
   ]
 
-  let reCat = new RegExp(`(${categories.join('|')}), (.*?),`)
+  let reCat = new RegExp(`(${categories.join('|')}), ([^(,|$)]+)`)
 
   let matchCat = desc.match(reCat)
 
   let foodName = matchCat
     ? matchCat[2]
-    : desc.match(/(.+?),/)[1].toLowerCase()
+    : desc.match(/(.+?),/)
+      ? desc.match(/(.+?),/)[1].toLowerCase()
+      : desc.toLowerCase()
 
   let reDetails = new RegExp(`.*${foodName}, (.*)`, 'i')
-  let foodDetails = desc.match(reDetails)[1]
+  let foodDetails = desc.match(reDetails)
+    ? desc.match(reDetails)[1]
+    : ''
 
   return [foodName, foodDetails]
 }
