@@ -2,11 +2,12 @@
   <div class="columns">
     <div class="column">
       <span class="is-subtitle is-size-3 has-text-grey-dark">
-        {{ portion }}g
-        <span v-show="details.length">&ndash;</span>
+        {{ portion }}g &ndash;
       </span>
-      <span class="is-subtitle is-size-3 has-text-grey-dark">
-        {{ details }}
+      <span
+        class="is-subtitle is-size-3 has-text-grey-dark"
+        :class="{'has-text-grey-light': !details.length, 'is-italic': !details.length}">
+        {{ details.length ? details : 'no further details' }}
       </span>
     </div>
   </div>

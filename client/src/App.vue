@@ -14,17 +14,17 @@
     <div class="columns">
       <app-macros
         class="column is-5"
-        :current-food="currentId"/>
+        :current-id="currentId"/>
       <div class="column">
         <div class="columns">
           <app-micros
             class="column"
             :micro-type="'minerals'"
-            :current-food="currentId"/>
+            :current-id="currentId"/>
           <app-micros
             class="column"
             :micro-type="'vitamins'"
-            :current-food="currentId"/>
+            :current-id="currentId"/>
         </div>
         <div class="columns">
           <div class="column is-1"/>
@@ -33,7 +33,7 @@
       </div>
     </div>
     <app-calories
-    :current-food="currentId"/>
+    :current-id="currentId"/>
     -->
   </div>
 </template>
