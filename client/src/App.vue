@@ -2,30 +2,29 @@
   <div
     id="app"
     class="container is-fluid">
-    <!--
     <app-navbar
-      :current-food="currentFood"
-      @currentChanged="currentFood = $event"
+      :target-id="targetId"
+      :current-id="currentId"
+      @currentChanged="currentId = $event"
       @initialChanged="requestFood($event)"/>
-    -->
     <app-details
-      :current="currentFood"
+      :current-id="currentId"
       class="details"/>
       <!--
     <div class="columns">
       <app-macros
         class="column is-5"
-        :current-food="currentFood"/>
+        :current-food="currentId"/>
       <div class="column">
         <div class="columns">
           <app-micros
             class="column"
             :micro-type="'minerals'"
-            :current-food="currentFood"/>
+            :current-food="currentId"/>
           <app-micros
             class="column"
             :micro-type="'vitamins'"
-            :current-food="currentFood"/>
+            :current-food="currentId"/>
         </div>
         <div class="columns">
           <div class="column is-1"/>
@@ -34,7 +33,7 @@
       </div>
     </div>
     <app-calories
-    :current-food="currentFood"/>
+    :current-food="currentId"/>
     -->
   </div>
 </template>
@@ -64,11 +63,14 @@ export default {
   data () {
     return {
       targetFoods: targetFoods,
-      currentFood: '19411'
+      targetId: '19411',
+      currentId: '19411'
     }
   },
   created () {
     let reqFood = this.$route.params.id || '19411'
+    this.targetId = reqFood
+    this.currentId = reqFood
     this.requestFood(reqFood)
   },
   methods: {

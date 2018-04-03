@@ -6,9 +6,9 @@
           <div class="dropdown-trigger">
             <div
               class="button is-large"
-              :class="{ 'is-primary': targetID === currentFood }"
-              @click="changeCurrent(targetID)">
-              <span>{{ targetName | capitalize }}</span>
+              :class="{ 'is-primary': targetId === currentId }"
+              @click="changeCurrent(targetId)">
+              <span>{{ targetFoods[targetId].name | capitalize }}</span>
               <span style="padding: 0 0 0.5rem 0.6rem">⌄</span>
             </div>
           </div>
@@ -29,11 +29,11 @@
         </div>
         <div
           class="button is-large"
-          v-for="(value, key) in currentSwaps"
+          v-for="(value, key) in swaps"
           :key="'current_' + key"
-          :class="{ 'is-primary': key === currentFood }"
+          :class="{ 'is-primary': key === currentId }"
           @click="changeCurrent(key)">
-          {{ value | capitalize }}
+          {{ value.name | capitalize }}
         </div>
       </div>
     </div>
@@ -42,9 +42,14 @@
 
 <script>
 import targetFoods from '@/data/target-foods.json'
+
 export default {
   props: {
-    currentFood: {
+    targetId: {
+      type: String,
+      required: true
+    },
+    currentId: {
       type: String,
       required: true
     }
@@ -55,19 +60,13 @@ export default {
     }
   },
   computed: {
-    targetID () {
-      return this.$store.state.swaps.targetID
+    desc () {
+      return this.$store.state.descriptions
     },
-    targetName () {
-      let target = this.targetFoods[this.targetID]
-      return target ? target.name : 'Error'
-    },
-    currentSwaps () {
-      let foods = this.$store.state.swaps.foods
+    swaps () {
       let swaps = {}
-      for (let food in foods) {
-        if (food === this.targetID) continue
-        swaps[food] = foods[food].name
+      for (let id in this.desc) {
+        if (id !== this.targetId) swaps[id] = this.desc[id]
       }
       return swaps
     },
@@ -76,7 +75,6 @@ export default {
       for (let target in this.targetFoods) {
         targets[target] = this.targetFoods[target].name
       }
-      console.log(targets)
       return targets
     }
   },

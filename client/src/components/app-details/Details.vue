@@ -15,7 +15,7 @@
 <script>
 export default {
   props: {
-    current: {
+    currentId: {
       type: String,
       required: true
     }
@@ -25,13 +25,13 @@ export default {
       return this.$store.state.descriptions
     },
     portion () {
-      return this.current in this.desc
-        ? this.desc[this.current].portion
+      return this.currentId in this.desc
+        ? this.desc[this.currentId].portion
         : 0
     },
     details () {
-      return this.current in this.desc
-        ? this.desc[this.current].details
+      return this.currentId in this.desc
+        ? this.desc[this.currentId].details
         : ''
     }
   }
