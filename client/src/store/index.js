@@ -6,27 +6,27 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
-    targetID: '',
-    currentID: '',
-    description: {},
+    targetId: '',
+    currentId: '',
+    descriptions: {},
     macros: {},
     micros: {}
   },
   mutations: {
-    setTarget (state, targetID) {
-      state.targetID = targetID
+    setTarget (state, targetId) {
+      state.targetId = targetId
     },
-    setCurrent (state, currentID) {
-      state.currentID = currentID
+    setCurrent (state, currentId) {
+      state.currentId = currentId
     },
-    setDescription (state, targetID, data) {
-      
+    setDescriptions (state, data) {
+      state.descriptions = controllers.getDescriptions(data.targetID, data.foods)
     },
-    setMacros (state, targetID, data) {
-
+    setMacros (state, data) {
+      state.macros = controllers.getMacros(data.targetID, data.foods)
     },
     setMicros (state, data) {
-
+      state.micros = controllers.getMicros(data.targetID, data.foods)
     }
   }
 })

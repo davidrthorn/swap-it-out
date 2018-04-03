@@ -1,3 +1,4 @@
+/* eslint-disable */
 const nutrientDetails = require('./nutrient-details')
 
 module.exports = {
@@ -7,7 +8,6 @@ module.exports = {
 function createResponse (foods, portionData, nutData) {
   // Unit conversion factors
   let unitConversion = {
-    'g': 1,
     'mg': 1000,
     'µg': 1000000
   }
@@ -45,8 +45,8 @@ function createResponse (foods, portionData, nutData) {
       let nutName = nutrientDetails.names[nutr.nutr_no]
 
       if (nutr.ndb_no === id) {
-        let nutValue = parseInt(nutr.nutr_val) / unitConversion[nutr.units]
-        food.nutrition[nutName] = nutValue
+        let factor = unitConversion[nutr.units] || 1
+        food.nutrition[nutName] = nutr.nutr_val / factor
 
         if (!descFound) {
           [food.name, food.description] = getDetails(nutr.long_desc)

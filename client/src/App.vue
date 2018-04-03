@@ -2,6 +2,7 @@
   <div
     id="app"
     class="container is-fluid">
+    <!--
     <app-navbar
       :current-food="currentFood"
       @currentChanged="currentFood = $event"
@@ -9,7 +10,6 @@
     <app-details
       :current-food="currentFood"
       class="details"/>
-      <!--
     <div class="columns">
       <app-macros
         class="column is-5"
@@ -72,10 +72,20 @@ export default {
   methods: {
     requestFood (id) {
       let foods = [id, ...this.targetFoods[id].swaps].join('_')
+      this.$store.commit('setTarget', id)
+      this.$store.commit('setCurrent', id)
       axios.get(`http://localhost:8081/api/food?foods=${foods}`).then(res => {
-        this.$store.commit('updatePortions', {
+        this.$store.commit('setDescriptions', {
           targetID: id,
-          foods: res.data.data
+          foods: res.data.data.foods
+        })
+        this.$store.commit('setMacros', {
+          targetID: id,
+          foods: res.data.data.foods
+        })
+        this.$store.commit('setMicros', {
+          targetID: id,
+          foods: res.data.data.foods
         })
       })
     }
