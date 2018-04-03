@@ -7,7 +7,7 @@
       <span
         class="is-subtitle is-size-3 has-text-grey-dark"
         :class="{'has-text-grey-light': !details.length, 'is-italic': !details.length}">
-        {{ details.length ? details : 'no further details' }}
+        {{ details.length ? details.toLowerCase() : 'no further details' }}
       </span>
     </div>
   </div>

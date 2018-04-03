@@ -6,7 +6,7 @@
       :target-id="targetId"
       :current-id="currentId"
       @currentChanged="currentId = $event"
-      @initialChanged="requestFood($event)"/>
+      @initialChanged="changeTarget($event)"/>
     <app-details
       :current-id="currentId"
       class="details"/>
@@ -69,12 +69,13 @@ export default {
   },
   created () {
     let reqFood = this.$route.params.id || '19411'
-    this.targetId = reqFood
-    this.currentId = reqFood
-    this.requestFood(reqFood)
+    this.changeTarget(reqFood)
   },
   methods: {
-    requestFood (id) {
+    changeTarget (id) {
+      this.targetId = id
+      this.currentId = id
+
       let foods = [id, ...this.targetFoods[id].swaps].join('_')
       this.$store.commit('setTarget', id)
       this.$store.commit('setCurrent', id)
