@@ -41,8 +41,8 @@ function getFoodByID (req, res, next) {
           food_des.ndb_no,
           food_des.long_desc,
           nutr_def.nutr_no,
-          nutr_def.nutrdesc,
-          nut_data.nutr_val
+          nut_data.nutr_val,
+          nutr_def.units
         FROM food_des
         INNER JOIN nut_data ON nut_data.ndb_no=food_des.ndb_no
         INNER JOIN nutr_def ON nutr_def.nutr_no=nut_data.nutr_no

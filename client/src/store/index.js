@@ -6,14 +6,27 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
-    swaps: {}
+    targetID: '',
+    currentID: '',
+    description: {},
+    macros: {},
+    micros: {}
   },
   mutations: {
-    updatePortions (state, data) {
-      state.swaps = controllers.portionData(data.targetID, data.foods.foods)
-    },
     setTarget (state, targetID) {
       state.targetID = targetID
+    },
+    setCurrent (state, currentID) {
+      state.currentID = currentID
+    },
+    setDescription (state, targetID, data) {
+      
+    },
+    setMacros (state, targetID, data) {
+
+    },
+    setMicros (state, data) {
+
     }
   }
 })

@@ -5,12 +5,20 @@ module.exports = {
 }
 
 function createResponse (foods, portionData, nutData) {
+  // Unit conversion factors
+  let unitConversion = {
+    'g': 1,
+    'mg': 1000,
+    'µg': 1000000
+  }
+
   let response = {
     foods: {}
   }
 
   // Create entry for each food
   for (let id of foods) {
+
     // Create object for individual food
     response.foods[id] = {
       nutrition: {},
@@ -37,7 +45,8 @@ function createResponse (foods, portionData, nutData) {
       let nutName = nutrientDetails.names[nutr.nutr_no]
 
       if (nutr.ndb_no === id) {
-        food.nutrition[nutName] = parseInt(nutr.nutr_val)
+        let nutValue = parseInt(nutr.nutr_val) / unitConversion[nutr.units]
+        food.nutrition[nutName] = nutValue
 
         if (!descFound) {
           [food.name, food.description] = getDetails(nutr.long_desc)

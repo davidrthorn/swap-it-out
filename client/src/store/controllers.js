@@ -1,28 +1,66 @@
 import targetFoods from '@/data/target-foods.json'
+import rdaValues from '@/data/rda.json'
+
 export default {
-  portionData: portionData
+  getDescription: getDescription,
+  getMacros: getMacros,
+  getMicros: getMicros
 }
 
-function portionData (targetID, foods) {
-  const portions = determinePortion(targetID, foods)
-  let portionedData = {
-    targetID: targetID
-  }
-  portionedData.foods = {}
 
-  for (let food in foods) {
-    let portion = portions[food]
-    portionedData.foods[food] = {
-      name: foods[food].name,
-      description: foods[food].description,
-      portion: portion,
-      nutrition: {}
-    }
+// functions needed: 
+// 1. create swap description object
+// 2. portion the data
+// 3. split into macros and micros
+// 4. apply RDA to micros
+// 5. rank micros and deliver limited set
+
+function getDescription (targetID, foods) {
+  let desciptions = {}
+
+  const portions = determinePortion(targetID, foods)
+
+  for (let id in foods) {
+    descriptions[id].name = foods[id].name
+    descriptions[id].details = foods[id].description
+    descriptions[id].portion = portions[id]
+  } 
+}
+
+function getMacros (targetID, foods) {
+  let macros = {}
+  const toChoose = [
+    'saturated',
+    'monounsaturated',
+    'polyunsaturated',
+    'protein',
+    'carbohydrates'
+  ]
+
+  const portions = determinePortion(targetID, foods)
+
+  for (let id in foods) {
+    let portion = portions[id]
+
     for (let nutr in foods[food].nutrition) {
-      portionedData.foods[food].nutrition[nutr] = foods[food].nutrition[nutr] * portion / 100
+      if (!toChoose.includes(nutr)) continue
+      macros[id][nutr] = foods[food].nutrition[nutr] * portion / 100
     }
   }
-  return portionedData
+  return macros
+}
+
+function getMicros (targetID, foods) {
+  let micros = {}
+  const portions = determinePortion(targetID, foods)
+
+  for (let id in foods) {
+    let portion = portions[id]
+
+    for (let nutr in foods[food].nutrition) {
+      micros[id][nutr] = foods[food]nutrition[nutr] * portion / 100
+    }
+  }
 }
 
 function determinePortion (targetID, foods) {
