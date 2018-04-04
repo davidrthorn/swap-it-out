@@ -69,11 +69,7 @@ export default {
         let data = res.data.data
         data.targetId = id
         data.currentId = id
-        this.$store.dispatch('changeTarget', res.data.data).then(res => {
-          console.log(res)
-          this.$store.commit('setTarget', id)
-          this.$store.commit('setCurrent', id)
-        })
+        this.$store.dispatch('changeTarget', data)
       })
     },
     changeCurrentId (id) {

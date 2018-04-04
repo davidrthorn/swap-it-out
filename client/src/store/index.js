@@ -1,44 +1,33 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import controllers from '@/store/controllers'
+import ctr from '@/store/controllers'
 
 Vue.use(Vuex)
 
+function createState (data) {
+  return {
+    targetId: data.targetId,
+    currentId: data.targetId,
+    descriptions: ctr.getDescriptions(data.targetId, data.foods),
+    macros: ctr.getMacros(data.targetId, data.foods),
+    micros: ctr.getMicros(data.targetId, data.foods)
+  }
+}
+
 function builder (data) {
   return new Vuex.Store({
-    state: {
-      targetId: data.targetId,
-      currentId: data.targetId,
-      descriptions: controllers.getDescriptions(data.targetId, data.foods),
-      macros: controllers.getMacros(data.targetId, data.foods),
-      micros: controllers.getMicros(data.targetId, data.foods)
-    },
+    state: createState(data),
     mutations: {
-      setTarget (state, targetId) {
-        state.targetId = targetId
+      setTarget (state, data) {
+        Object.assign(state, createState(data))
       },
-      setCurrent (state, currentId) {
+      setCurrentId (state, currentId) {
         state.currentId = currentId
-      },
-      setDescriptions (state, data) {
-        state.descriptions = controllers.getDescriptions(data.targetId, data.foods)
-      },
-      setMacros (state, data) {
-        state.macros = controllers.getMacros(data.targetId, data.foods)
-      },
-      setMicros (state, data) {
-        state.micros = controllers.getMicros(data.targetId, data.foods)
       }
     },
     actions: {
-      changeTarget ({ state, commit }, data) {
-        return new Promise((resolve, reject) => {
-          commit('setDescriptions', data)
-          commit('setMacros', data)
-          commit('setMicros', data)
-
-          if (state.micros[data.targetId]) resolve('success')
-        })
+      changeTarget ({commit}, data) {
+        commit('setTarget', data)
       }
     }
   })
