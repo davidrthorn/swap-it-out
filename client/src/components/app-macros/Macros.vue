@@ -1,9 +1,7 @@
 <template>
   <div>
     <div>
-      <app-bar
-        :target-id="targetId"
-        :current-id="currentId"/>
+      <app-bar/>
     </div>
     <!--
     <app-quant
@@ -21,16 +19,6 @@ export default {
   components: {
     appBar: Bar,
     appQuant: Quant
-  },
-  props: {
-    targetId: {
-      type: String,
-      required: true
-    },
-    currentId: {
-      type: String,
-      required: true
-    }
   }
 }
 </script>

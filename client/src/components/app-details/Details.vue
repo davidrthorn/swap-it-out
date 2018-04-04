@@ -15,25 +15,18 @@
 
 <script>
 export default {
-  props: {
-    currentId: {
-      type: String,
-      required: true
-    }
-  },
   computed: {
-    desc () {
-      return this.$store.state.descriptions
+    targetId () {
+      return this.$store.state.targetId
+    },
+    currentId () {
+      return this.$store.state.currentId
     },
     portion () {
-      return this.currentId in this.desc
-        ? this.desc[this.currentId].portion
-        : 0
+      return this.$store.state.descriptions[this.currentId].portion
     },
     details () {
-      return this.currentId in this.desc
-        ? this.desc[this.currentId].details
-        : ''
+      return this.$store.state.descriptions[this.currentId].details
     }
   }
 }

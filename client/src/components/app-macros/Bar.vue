@@ -69,17 +69,13 @@
 
 <script>
 export default {
-  props: {
-    targetId: {
-      type: String,
-      required: true
-    },
-    currentId: {
-      type: String,
-      required: true
-    }
-  },
   computed: {
+    targetId () {
+      return this.$store.state.targetId
+    },
+    currentId () {
+      return this.$store.state.currentId
+    },
     macros () {
       return this.$store.state.macros
     },

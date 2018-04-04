@@ -3,19 +3,12 @@
     id="app"
     class="container is-fluid">
     <app-navbar
-      :target-id="targetId"
-      :current-id="currentId"
-      @currentChanged="currentId = $event"
-      @initialChanged="changeTarget($event)"/>
-    <app-details
-      :current-id="currentId"
-      class="details"/>
+      @currentIdChanged="changeCurrentId($event)"
+      @targetIdChanged="changeTargetId($event)"/>
+    <app-details class="details"/>
     <div class="columns">
-      <app-macros
-        class="column is-5"
-        :target-id="targetId"
-        :current-id="currentId"/>
-        <!--
+      <app-macros class="column is-5"/>
+      <!--
       <div class="column">
         <div class="columns">
           <app-micros
@@ -32,16 +25,17 @@
           <app-qual class="column is-10"/>
         </div>
       </div>
-    -->
+        -->
     </div>
     <!--
-    <app-calories
-    :current-id="currentId"/>
+  <app-calories
+  :current-id="currentId"/>
     -->
   </div>
 </template>
 
 <script>
+/* eslint-disable */
 // Components
 import Navbar from './components/app-navbar/Navbar.vue'
 import Details from './components/app-details/Details.vue'
@@ -49,10 +43,9 @@ import Macros from './components/app-macros/Macros.vue'
 import Micros from './components/app-micros/Micros.vue'
 import Qual from './components/app-qual/Qual.vue'
 import Calories from './components/app-calories/Calories.vue'
-
-import axios from 'axios'
-
 import targetFoods from '@/data/target-foods.json'
+
+import Axios from 'axios'
 
 export default {
   components: {
@@ -65,37 +58,26 @@ export default {
   },
   data () {
     return {
-      targetFoods: targetFoods,
-      targetId: '19411',
-      currentId: '19411'
+      targetFoods: targetFoods
     }
   },
-  created () {
-    let reqFood = this.$route.params.id || '19411'
-    this.changeTarget(reqFood)
-  },
   methods: {
-    changeTarget (id) {
-      this.targetId = id
-      this.currentId = id
-
+    changeTargetId (id) {
       let foods = [id, ...this.targetFoods[id].swaps].join('_')
-      this.$store.commit('setTarget', id)
-      this.$store.commit('setCurrent', id)
-      axios.get(`http://localhost:8081/api/food?foods=${foods}`).then(res => {
-        this.$store.commit('setDescriptions', {
-          targetID: id,
-          foods: res.data.data.foods
-        })
-        this.$store.commit('setMacros', {
-          targetID: id,
-          foods: res.data.data.foods
-        })
-        this.$store.commit('setMicros', {
-          targetID: id,
-          foods: res.data.data.foods
+
+      Axios.get(`http://localhost:8081/api/food?foods=${foods}`).then(res => {
+        let data = res.data.data
+        data.targetId = id
+        data.currentId = id
+        this.$store.dispatch('changeTarget', res.data.data).then(res => {
+          console.log(res)
+          this.$store.commit('setTarget', id)
+          this.$store.commit('setCurrent', id)
         })
       })
+    },
+    changeCurrentId (id) {
+      this.$store.commit('setCurrent', id)
     }
   }
 }

@@ -7,7 +7,7 @@
             <div
               class="button is-large"
               :class="{ 'is-primary': targetId === currentId }"
-              @click="changeCurrent(targetId)">
+              @click="changeCurrentId(targetId)">
               <span>{{ targetFoods[targetId].name | capitalize }}</span>
               <span style="padding: 0 0 0.5rem 0.6rem">⌄</span>
             </div>
@@ -21,7 +21,7 @@
                 class="dropdown-item"
                 v-for="(value, key) in targets"
                 :key="'targets_' + key"
-                @click="changeInitial(key)">
+                @click="changeTargetId(key)">
                 {{ value | capitalize }}
               </a>
             </div>
@@ -32,7 +32,7 @@
           :class="{ 'is-primary': key === currentId }"
           v-for="(value, key) in swaps"
           :key="'current_' + key"
-          @click="changeCurrent(key)">
+          @click="changeCurrentId(key)">
           {{ value.name | capitalize }}
         </div>
       </div>
@@ -44,22 +44,18 @@
 import targetFoods from '@/data/target-foods.json'
 
 export default {
-  props: {
-    targetId: {
-      type: String,
-      required: true
-    },
-    currentId: {
-      type: String,
-      required: true
-    }
-  },
   data () {
     return {
       targetFoods: targetFoods
     }
   },
   computed: {
+    targetId () {
+      return this.$store.state.targetId
+    },
+    currentId () {
+      return this.$store.state.currentId
+    },
     desc () {
       return this.$store.state.descriptions
     },
@@ -79,11 +75,11 @@ export default {
     }
   },
   methods: {
-    changeCurrent (food) {
-      this.$emit('currentChanged', food)
+    changeCurrentId (id) {
+      this.$emit('currentIdChanged', id)
     },
-    changeInitial (food) {
-      this.$emit('initialChanged', food)
+    changeTargetId (id) {
+      this.$emit('targetIdChanged', id)
     }
   }
 }
