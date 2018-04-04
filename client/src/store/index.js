@@ -5,12 +5,15 @@ import ctr from '@/store/controllers'
 Vue.use(Vuex)
 
 function createState (data) {
+  let id = data.targetId
+  let food = [id, data.foods]
+
   return {
-    targetId: data.targetId,
-    currentId: data.targetId,
-    descriptions: ctr.getDescriptions(data.targetId, data.foods),
-    macros: ctr.getMacros(data.targetId, data.foods),
-    micros: ctr.getMicros(data.targetId, data.foods)
+    targetId: id,
+    currentId: id,
+    descriptions: ctr.getDescriptions(...food),
+    macros: ctr.getMacros(...food),
+    micros: ctr.getMicros(...food)
   }
 }
 
@@ -18,16 +21,19 @@ function builder (data) {
   return new Vuex.Store({
     state: createState(data),
     mutations: {
-      setTarget (state, data) {
+      setTargetId (state, data) {
         Object.assign(state, createState(data))
       },
-      setCurrentId (state, currentId) {
-        state.currentId = currentId
+      setCurrentId (state, id) {
+        state.currentId = id
       }
     },
     actions: {
-      changeTarget ({commit}, data) {
-        commit('setTarget', data)
+      changeTargetId ({commit}, data) {
+        commit('setTargetId', data)
+      },
+      changeCurrentId ({commit}, id) {
+        commit('setCurrentId', id)
       }
     }
   })
