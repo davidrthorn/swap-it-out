@@ -8,24 +8,18 @@
     <app-details class="details"/>
     <div class="columns">
       <app-macros class="column is-5"/>
-      <!--
       <div class="column">
         <div class="columns">
-          <app-micros
-            class="column"
-            :micro-type="'minerals'"
-            :current-id="currentId"/>
-          <app-micros
-            class="column"
-            :micro-type="'vitamins'"
-            :current-id="currentId"/>
+          <app-micros class="column"/>
+          <app-micros class="column"/>
         </div>
+        <!--
         <div class="columns">
           <div class="column is-1"/>
           <app-qual class="column is-10"/>
         </div>
-      </div>
         -->
+      </div>
     </div>
     <!--
   <app-calories

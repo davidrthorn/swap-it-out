@@ -3,12 +3,7 @@
     <div>
       <app-bar/>
     </div>
-    <!--
-    <app-quant
-      :initial="initial"
-      :current-macros="macros[currentId]"
-      style="margin-top: 24px"/>
-    -->
+    <app-quant style="margin-top: 24px"/>
   </div>
 </template>
 <script>

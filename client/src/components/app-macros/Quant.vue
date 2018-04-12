@@ -12,7 +12,7 @@
           <div
             class="bar"
             :style="{
-              width: macros[macro] + '%',
+              width: macros[currentId][macro] + '%',
               background: macro == 'fibre' ? 'indianred' : '#00D1B2'
             }"
           />
@@ -24,12 +24,6 @@
 
 <script>
 export default {
-  props: {
-    macros: {
-      type: Object,
-      required: true
-    }
-  },
   data () {
     return {
       quantMacros: [
@@ -37,6 +31,17 @@ export default {
         'sugar',
         'salt'
       ]
+    }
+  },
+  computed: {
+    targetId () {
+      return this.$store.state.targetId
+    },
+    currentId () {
+      return this.$store.state.currentId
+    },
+    macros () {
+      return this.$store.state.macros
     }
   }
 }

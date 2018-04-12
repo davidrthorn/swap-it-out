@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      v-for="(value, key) in micros"
+      v-for="(value, key) in micros[currentId]"
       :key="key"
       class="columns is-mobile">
       <div class="column is-3 has-text-right-desktop">
@@ -19,24 +19,18 @@
 </template>
 <script>
 export default {
-  props: {
-    microType: {
-      type: String,
-      required: true
-    },
-    currentFood: {
-      type: String,
-      required: true
-    }
-  },
   computed: {
+    targetId () {
+      return this.$store.state.targetId
+    },
+    currentId () {
+      return this.$store.state.currentId
+    },
     micros () {
-      let swaps = this.$store.state.swaps[this.currentFood]
-      return swaps
-        ? swaps.micros[this.microType]
-        : this.$store.state.targetFood.micros[this.microType]
+      return this.$store.state.micros
     }
   }
+
 }
 </script>
 <style scoped>
