@@ -18,26 +18,22 @@ function createState (data) {
   }
 }
 
-function builder (data) {
-  return new Vuex.Store({
-    state: createState(data),
-    mutations: {
-      setTargetId (state, data) {
-        Object.assign(state, createState(data))
-      },
-      setCurrentId (state, id) {
-        state.currentId = id
-      }
+export const store = new Vuex.Store({
+  state: {},
+  mutations: {
+    setTargetId (state, data) {
+      Object.assign(state, createState(data))
     },
-    actions: {
-      changeTargetId ({commit}, data) {
-        commit('setTargetId', data)
-      },
-      changeCurrentId ({commit}, id) {
-        commit('setCurrentId', id)
-      }
+    setCurrentId (state, id) {
+      state.currentId = id
     }
-  })
-}
-
-export default builder
+  },
+  actions: {
+    changeTargetId ({commit}, data) {
+      commit('setTargetId', data)
+    },
+    changeCurrentId ({commit}, id) {
+      commit('setCurrentId', id)
+    }
+  }
+})

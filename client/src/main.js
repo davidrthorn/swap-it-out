@@ -17,15 +17,10 @@ Vue.component('animatedNumber', animatedNumber)
 const defaultId = '19411'
 const foods = [defaultId, ...targetFoods[defaultId].swaps].join('_')
 
-Axios.get(`http://localhost:8081/api/food?foods=${foods}`).then(res => {
-  let data = res.data.data
-  data.targetId = defaultId
-  data.currentId = defaultId
-  new Vue({
-    store: createStore(data),
-    el: '#app',
-    router,
-    components: { App },
-    template: '<App/>'
-  })
+new Vue({
+  store: createStore(data),
+  el: '#app',
+  router,
+  components: { App },
+  template: '<App/>'
 })
