@@ -35,6 +35,8 @@
 <script>
 /* eslint-disable */
 // Components
+import Axios from 'axios'
+
 import Navbar from './components/app-navbar/Navbar.vue'
 import Details from './components/app-details/Details.vue'
 import Macros from './components/app-macros/Macros.vue'
@@ -43,44 +45,41 @@ import Qual from './components/app-qual/Qual.vue'
 import Calories from './components/app-calories/Calories.vue'
 
 import targetFoods from '@/data/target-foods.json'
-import Axios from 'axios'
 
 export default {
   components: {
-        appNavbar: Navbar,
-        appDetails: Details,
-        appMacros: Macros,
-        appMicros: Micros,
-        appQual: Qual,
-        appCalories: Calories
-      
+    appNavbar: Navbar,
+    appDetails: Details,
+    appMacros: Macros,
+    appMicros: Micros,
+    appQual: Qual,
+    appCalories: Calories
+  },
+  beforeRouteEnter (to, from, next) {
+    next()
   },
   data () {
     return {
-            targetFoods: targetFoods
-          
+      targetFoods: targetFoods,
+      ready: true
     }
-      
   },
   methods: {
     changeTargetId (id) {
-            let foods = [id, ...this.targetFoods[id].swaps].join('_')
+      let foods = [id, ...this.targetFoods[id].swaps].join('_')
+      this.ready = false
       Axios.get(`http://localhost:8081/api/food?foods=${foods}`).then(res => {
-                let data = res.data.data
-                data.targetId = id
-                data.currentId = id
-                this.$store.dispatch('changeTargetId', data)
-              
+        let data = res.data.data
+        data.targetId = id
+        data.currentId = id
+        this.$store.dispatch('changeTargetId', data)
+        this.ready = true
       })
-          
     },
     changeCurrentId (id) {
-            this.$store.dispatch('changeCurrentId', id)
-          
+      this.$store.dispatch('changeCurrentId', id)
     }
-      
   }
-
 }
 </script>
 

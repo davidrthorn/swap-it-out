@@ -1,9 +1,10 @@
 import Vue from 'vue'
-import App from './App'
-import router from './router'
+import App from '@/App'
+import router from '@/router'
 import Axios from 'axios'
-import animatedNumber from './components/animated-number.js'
-import store from './store/index.js'
+
+import animatedNumber from '@/components/animated-number.js'
+import createStore from '@/store/index.js'
 import targetFoods from '@/data/target-foods.json'
 
 Vue.config.productionTip = false
@@ -17,17 +18,14 @@ const defaultId = '19411'
 const foods = [defaultId, ...targetFoods[defaultId].swaps].join('_')
 
 Axios.get(`http://localhost:8081/api/food?foods=${foods}`).then(res => {
-    let data = res.data.data
-    data.targetId = defaultId
-    data.currentId = defaultId
-
+  let data = res.data.data
+  data.targetId = defaultId
+  data.currentId = defaultId
   new Vue({
-        store: store(data),
-        el: '#app',
-        router,
-        components: { App  },
-        template: '<App/>'
-      
+    store: createStore(data),
+    el: '#app',
+    router,
+    components: { App },
+    template: '<App/>'
   })
-
 })
