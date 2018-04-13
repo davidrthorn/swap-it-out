@@ -20,6 +20,7 @@ function getDescriptions (targetId, foods) {
     descriptions[id].name = foods[id].name
     descriptions[id].details = foods[id].description
     descriptions[id].portion = portions[id]
+    descriptions[id].calories = foods[id].nutrition.calories * portions[id] / 100
   }
   return descriptions
 }
@@ -45,15 +46,15 @@ function getMacros (targetId, foods) {
       macros[id][nutr] = foods[id].nutrition[nutr] * portion / 100
     }
     
-    // This way of storing the data does not allow access to the original values
-    macros[id].salt = foods[id].nutrition.sodium * portion * 2.5 / rdaValues.macro.salt
-    macros[id].sugar = foods[id].nutrition.sugar * portion / rdaValues.macro.sugar
-    macros[id].fibre = foods[id].nutrition.fibre * portion / rdaValues.macro.fibre
+    // This way of storing the data does not allow access to the original value
+    macros[id].salt = foods[id].nutrition.sodium * portion * 2.5 / rdaValues.macros.salt
+    macros[id].sugar = foods[id].nutrition.sugar * portion / rdaValues.macros.sugar
+    macros[id].fibre = foods[id].nutrition.fibre * portion / rdaValues.macros.fibre
   }
   return macros
 }
 
-function getMicros (targetId, foods) {
+function getMicros (targetId, foods, type) {
   let micros = {}
   let tempMicros = {}
   let microMaxes = {}
@@ -65,10 +66,10 @@ function getMicros (targetId, foods) {
     let portion = portions[id]
 
     for (let nutr in foods[id].nutrition) {
-      if (!rdaValues.micro[nutr]) continue 
+      if (!rdaValues.micros[type][nutr]) continue 
       tempMicros[id][nutr] = {}
       let portionNutr = foods[id].nutrition[nutr] * portion / 100
-      let rdaNutr = portionNutr / rdaValues.micro[nutr] * 100
+      let rdaNutr = portionNutr / rdaValues.micros[type][nutr] * 100
 
       tempMicros[id][nutr].total = portionNutr
       tempMicros[id][nutr].percentRda = rdaNutr
@@ -83,8 +84,8 @@ function getMicros (targetId, foods) {
 
   for (let id in tempMicros) {
     micros[id] = {}
-    for (let micro in tempMicros[id]) {
-      if (sortedMicros.includes(micro)) micros[id][micro] = tempMicros[id][micro]
+    for (let micro of sortedMicros) {
+      micros[id][micro] = tempMicros[id][micro] || 0
     }
   }
 
@@ -107,8 +108,8 @@ function determinePortion (targetId, foods) {
     portions[id] = meds
       ? meds[Object.keys(meds)[0]]
       : cals > 400
-        ? Math.round(100 / cals * targetCals)
-        : Math.round(100 / cals * 150)
+        ? 100 / cals * targetCals
+        : 100 / cals * 150
   }
   return portions
 }

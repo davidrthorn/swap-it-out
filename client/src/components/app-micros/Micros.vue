@@ -4,14 +4,14 @@
       v-for="(value, key) in micros[currentId]"
       :key="key"
       class="columns is-mobile">
-      <div class="column is-3 has-text-right-desktop">
-        <p>{{ key | capitalize }}</p>
+      <div class="column is-3 has-text-right-desktop is-capitalized">
+        <p>{{ key }}</p>
       </div>
       <div class="column">
         <div class="bar-surround">
           <div
             class="bar"
-            :style="{ width: `${value}%` }"/>
+            :style="{ width: `${value.percentRda}%` }"/>
         </div>
       </div>
     </div>
@@ -19,6 +19,12 @@
 </template>
 <script>
 export default {
+  props: {
+    microType: {
+      type: String,
+      required: true
+    }
+  },
   computed: {
     targetId () {
       return this.$store.state.targetId
@@ -27,7 +33,7 @@ export default {
       return this.$store.state.currentId
     },
     micros () {
-      return this.$store.state.micros
+      return this.$store.state[this.microType]
     }
   }
 
@@ -44,7 +50,7 @@ export default {
   background: #00D1B2;
   height: 100%;
   text-align: center;
-  transition: width 500ms ease;
+  transition: width 500ms ease-out;
   max-width: 100%
 }
 .columns {

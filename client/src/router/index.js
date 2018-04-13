@@ -6,11 +6,9 @@ Vue.use(Router)
 
 export default new Router({
   mode: 'history',
-  routes: [
-    {
-      path: '/:id',
-      name: 'reqFood',
-      component: App
-    }
-  ]
+  routes: [{
+    path: '/:id',
+    name: 'reqFood',
+    component: App
+  }]
 })

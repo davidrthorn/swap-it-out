@@ -90,9 +90,15 @@ export default {
     rows () {
       let m = this.macros
       let maxMacros = 0
+      let discard = [
+        'fibre',
+        'sugar',
+        'salt'
+      ]
 
       for (let id in m) {
         for (let macro in m[id]) {
+          if (discard.includes(macro)) continue
           maxMacros = m[id][macro] > maxMacros ? m[id][macro] : maxMacros
         }
       }
@@ -158,7 +164,7 @@ export default {
 .bar {
   position: absolute;
   width: 23%;
-  transition: height 450ms ease;
+  transition: height 450ms ease-out;
 }
 
 #fat-bar, #fat-reference {
@@ -167,7 +173,7 @@ export default {
 
 .sub-fat {
   width: 100%;
-  transition: height 450ms ease;
+  transition: height 450ms ease-out;
 }
 
 #protein-bar, #protein-reference {

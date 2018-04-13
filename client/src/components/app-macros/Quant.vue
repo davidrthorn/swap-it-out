@@ -13,7 +13,7 @@
             class="bar"
             :style="{
               width: macros[currentId][macro] + '%',
-              background: macro == 'fibre' ? 'indianred' : '#00D1B2'
+              background: macro == 'fibre' ? '#00D1B2' : 'indianred'
             }"
           />
         </div>
@@ -57,14 +57,9 @@ export default {
   color: white;
   height: 100%;
   text-align: center;
-  transition: width 530ms ease;
+  transition: width 530ms ease-out;
   padding-top: 4px;
-}
-#fibre-bar {
-  background: #00D1B2;
-}
-#sugar-bar, #salt-bar {
-  background: indianred;
+  max-width: 100%;
 }
 .columns {
   margin-top: -0.75rem !important;

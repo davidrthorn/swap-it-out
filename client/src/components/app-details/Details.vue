@@ -2,7 +2,7 @@
   <div class="columns">
     <div class="column">
       <span class="is-subtitle is-size-3 has-text-grey-dark">
-        {{ portion }}g &ndash;
+        {{ Math.round(portion) }}g &ndash;
       </span>
       <span
         class="is-subtitle is-size-3 has-text-grey-dark"

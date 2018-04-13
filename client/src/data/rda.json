@@ -1,29 +1,33 @@
 {
-  "micro": {
-    "calcium": 0.7,
-    "chromium": 0.000025,
-    "cobalt": 0.0000015,
-    "copper": 0.0012,
-    "iodine": 0.00014,
-    "iron": 0.0148,
-    "magnesium": 0.3,
-    "phosporus": 0.55,
-    "potassium": 3.5,
-    "selenium": 0.000075,
-    "vitamin A": 0.0007,
-    "vitamin B1": 0.001,
-    "vitamin B12": 0.0000015,
-    "vitamin B2": 0.0013,
-    "vitamin B3": 0.0165,
-    "vitamin B6": 0.0014,
-    "vitamin B9": 0.0002,
-    "vitamin C": 0.040,
-    "vitamin D": 0.00001,
-    "vitamin E": 0.000004,
-    "vitamin K": 0.000075,
-    "zinc": 0.0095
+  "micros": {
+    "vitamins": {
+      "vitamin a": 0.0007,
+      "vitamin b1": 0.001,
+      "vitamin b12": 0.0000015,
+      "vitamin b2": 0.0013,
+      "vitamin b3": 0.0165,
+      "vitamin b6": 0.0014,
+      "vitamin b9": 0.0002,
+      "vitamin c": 0.040,
+      "vitamin d": 0.00001,
+      "vitamin e": 0.004,
+      "vitamin k": 0.000075
+    },
+    "minerals": {
+      "calcium": 0.7,
+      "chromium": 0.000025,
+      "cobalt": 0.0000015,
+      "copper": 0.0012,
+      "iodine": 0.00014,
+      "iron": 0.0148,
+      "magnesium": 0.3,
+      "phosporus": 0.55,
+      "potassium": 3.5,
+      "selenium": 0.000075,
+      "zinc": 0.0095
+    }
   },
-  "macro": {
+  "macros": {
     "fibre": 30,
     "salt": 6,
     "sugar": 30

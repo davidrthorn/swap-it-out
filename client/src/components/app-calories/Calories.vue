@@ -34,18 +34,10 @@ export default {
     bmrCalc: BMR,
     exerciseCalc: Exercise
   },
-  props: {
-    currentFood: {
-      type: String,
-      required: true
-    }
-  },
   computed: {
     calories () {
-      let swap = this.$store.state.swaps[this.currentFood]
-      return swap
-        ? swap.calories
-        : this.$store.state.targetFood.calories
+      let currentId = this.$store.state.currentId
+      return this.$store.state.descriptions[currentId].calories
     }
   }
 }
