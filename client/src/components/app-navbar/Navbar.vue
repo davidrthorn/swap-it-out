@@ -1,7 +1,7 @@
 <template>
   <div class="navbar is-fixed-top">
     <div class="navbar-item">
-      <target-dropdown/>
+      <target-dropdown @targetIdChanged="changeTargetId($event)"/>
     </div>
     <div class="navbar-item">
       <div class="buttons">
