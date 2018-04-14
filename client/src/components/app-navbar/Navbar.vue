@@ -1,6 +1,9 @@
 <template>
   <div class="navbar is-fixed-top">
     <div class="navbar-item">
+      <target-dropdown/>
+    </div>
+    <div class="navbar-item">
       <div class="buttons">
         <div class="dropdown is-hoverable">
           <div class="dropdown-trigger">
@@ -42,8 +45,12 @@
 
 <script>
 import targetFoods from '@/data/target-foods.json'
+import targetDropdown from './TargetDropdown.vue'
 
 export default {
+  components: {
+    targetDropdown: targetDropdown
+  },
   data () {
     return {
       targetFoods: targetFoods

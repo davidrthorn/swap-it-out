@@ -112,7 +112,7 @@ export default {
 .loader-overlay {
   z-index: 1000;
   position: absolute;
-  background: rgba(100, 100, 100, 0.2);
+  background: rgba(200, 200, 200, 0.2);
   top: 0;
   width: 100vw;
   height: 100vh;
