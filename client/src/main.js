@@ -1,11 +1,9 @@
 import Vue from 'vue'
 import App from '@/App'
 import router from '@/router'
-import Axios from 'axios'
 
 import animatedNumber from '@/components/animated-number.js'
-import createStore from '@/store/index.js'
-import targetFoods from '@/data/target-foods.json'
+import { store } from '@/store/index'
 
 Vue.config.productionTip = false
 
@@ -14,11 +12,8 @@ Vue.filter('capitalize', (value) => value.substr(0, 1).toUpperCase() + value.sub
 Vue.component('animatedNumber', animatedNumber)
 
 /* eslint-disable no-new */
-const defaultId = '19411'
-const foods = [defaultId, ...targetFoods[defaultId].swaps].join('_')
-
 new Vue({
-  store: createStore(data),
+  store: store,
   el: '#app',
   router,
   components: { App },
