@@ -2,16 +2,10 @@
   <div
     id="app"
     v-if="appInitialised">
-    <div
-      class="loader"
-      v-if="!ready"/>
-    <div
-      class="container is-fluid"
-      v-else>
+    <div class="container is-fluid">
       <app-navbar
         @currentIdChanged="changeCurrentId($event)"
         @targetIdChanged="changeTargetId($event)"/>
-        <!--
       <app-details class="details"/>
       <div class="columns">
         <app-macros class="column is-5"/>
@@ -31,7 +25,6 @@
         </div>
       </div>
       <app-calories/>
-      -->
     </div>
   </div>
 </template>
@@ -49,7 +42,6 @@ import Qual from './components/app-qual/Qual.vue'
 import Calories from './components/app-calories/Calories.vue'
 
 import targetFoods from '@/data/target-foods.json'
-import { store } from '@/store/index'
 
 export default {
   components: {
@@ -67,27 +59,28 @@ export default {
       let data = res.data.data
       data.targetId = id
       data.currentId = id
-      store.dispatch('changeTargetId', data)
+      this.$store.dispatch('changeTargetId', data)
       this.appInitialised = true
     })
+  },
+  created () {
+    this.changeCurrentId(this.$route.params.id)
   },
   data () {
     return {
       targetFoods: targetFoods,
-      appInitialised: false,
-      ready: true
+      appInitialised: false
     }
   },
   methods: {
     changeTargetId (id) {
       let foods = [id, ...this.targetFoods[id].swaps].join('_')
-      this.ready = false
       Axios.get(`http://localhost:8081/api/food?foods=${foods}`).then(res => {
         let data = res.data.data
         data.targetId = id
         data.currentId = id
         this.$store.dispatch('changeTargetId', data)
-        this.ready = true
+        this.$router.push(id)
       })
     },
     changeCurrentId (id) {
