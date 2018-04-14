@@ -1,7 +1,7 @@
 <template>
   <div
     id="app"
-    v-if="appInitialised">
+    v-if="appReady">
     <div class="container is-fluid">
       <app-navbar
         @currentIdChanged="changeCurrentId($event)"
@@ -52,28 +52,19 @@ export default {
     appQual: Qual,
     appCalories: Calories
   },
-  beforeCreate () {
-    let id = this.$route.params.id
-    let foods = [id, ...targetFoods[id].swaps].join('_')
-    Axios.get(`http://localhost:8081/api/food?foods=${foods}`).then(res => {
-      let data = res.data.data
-      data.targetId = id
-      data.currentId = id
-      this.$store.dispatch('changeTargetId', data)
-      this.appInitialised = true
-    })
-  },
-  created () {
-    this.changeCurrentId(this.$route.params.id)
+  mounted () {
+    let id = this.$route.params.id || '19411'
+    this.changeTargetId(id)
   },
   data () {
     return {
       targetFoods: targetFoods,
-      appInitialised: false
+      appReady: false
     }
   },
   methods: {
     changeTargetId (id) {
+      this.appReady = false
       let foods = [id, ...this.targetFoods[id].swaps].join('_')
       Axios.get(`http://localhost:8081/api/food?foods=${foods}`).then(res => {
         let data = res.data.data
@@ -81,6 +72,7 @@ export default {
         data.currentId = id
         this.$store.dispatch('changeTargetId', data)
         this.$router.push(id)
+        this.appReady = true
       })
     },
     changeCurrentId (id) {

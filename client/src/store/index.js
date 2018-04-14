@@ -19,7 +19,10 @@ function createState (data) {
 }
 
 export const store = new Vuex.Store({
-  state: {},
+  state: {
+    targetId: '19411',
+    currentId: '19411'
+  },
   mutations: {
     setTargetId (state, data) {
       Object.assign(state, createState(data))
