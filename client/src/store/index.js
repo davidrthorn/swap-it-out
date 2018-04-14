@@ -21,7 +21,11 @@ function createState (data) {
 export const store = new Vuex.Store({
   state: {
     targetId: '19411',
-    currentId: '19411'
+    currentId: '19411',
+    descriptions: {},
+    macros: {},
+    vitamins: {},
+    minerals: {}
   },
   mutations: {
     setTargetId (state, data) {

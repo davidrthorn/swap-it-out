@@ -1,7 +1,7 @@
 <template>
   <div
     id="app"
-    v-if="appReady">
+    v-if="appLoaded">
     <div class="container is-fluid">
       <app-navbar
         @currentIdChanged="changeCurrentId($event)"
@@ -59,7 +59,8 @@ export default {
   data () {
     return {
       targetFoods: targetFoods,
-      appReady: false
+      appReady: false,
+      appLoaded: false
     }
   },
   methods: {
@@ -73,6 +74,7 @@ export default {
         this.$store.dispatch('changeTargetId', data)
         this.$router.push(id)
         this.appReady = true
+        this.appLoaded = true
       })
     },
     changeCurrentId (id) {
