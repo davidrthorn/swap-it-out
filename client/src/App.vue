@@ -2,6 +2,11 @@
   <div
     id="app"
     v-if="appLoaded">
+    <div
+      class="loader-overlay"
+      v-if="!appReady">
+      <div class="loader"/>
+    </div>
     <div class="container is-fluid">
       <app-navbar
         @currentIdChanged="changeCurrentId($event)"
@@ -104,12 +109,19 @@ export default {
   margin-right: 0.5rem !important;
 }
 
-.loader {
+.loader-overlay {
+  z-index: 1000;
   position: absolute;
-  width: 60px;
-  height: 60px;
-  top: 48%;
-  left: 48%;
+  background: rgba(100, 100, 100, 0.2);
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+}
+.loader {
+  width: 4vw;
+  height: 4vw;
+  top: 44vh;
+  left: 48vw;
 }
 
 @media screen and (max-width: 558px) {
