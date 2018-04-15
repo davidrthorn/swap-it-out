@@ -1,22 +1,18 @@
 <template>
   <div style="position: relative; color: indianred">
     <div>
-      <input
-        v-model="dropEntry"
-        @focus="showList = true"
-        @blur="showList = false">
+      <input v-model="dropEntry">
     </div>
     <div
       class="food-list"
       v-if="showList">
       <div
         class="drop-item"
-        v-for="food in dropList.splice(0, 10)"
-        :key="`drop_${food}`"
-        @click="changeTargetId(food)">
-        {{ food }}
+        v-for="(value, key) in targetList"
+        :key="`drop_${key}`"
+        @click="changeTargetId(value, key)">
+        {{ key | capitalize }}
       </div>
-      testing
     </div>
   </div>
 </template>
@@ -28,26 +24,52 @@ export default {
   data () {
     return {
       targetFoods: targetFoods,
-      dropEntry: '',
-      showList: false
+      targetList: {},
+      dropEntry: targetFoods[this.$route.params.id].name,
+      showList: true
     }
   },
   computed: {
-    dropList () {
-      return Object.keys(this.targetFoods).filter(k => k.match(this.dropEntry))
-    },
     testComp () {
       return this.dropEntry
+    },
+    targetNames () {
+      let namePairs = {}
+      for (let id in targetFoods) {
+        namePairs[targetFoods[id].name] = id
+      }
+      return namePairs
+    }
+  },
+  watch: {
+    showList () {
+      this.filterList()
+    },
+    dropEntry () {
+      this.filterList()
     }
   },
   methods: {
-    changeTargetId (id) {
+    changeTargetId (id, name) {
       this.$emit('targetIdChanged', id)
+      this.dropEntry = name
+    },
+    filterList () {
+      let list = {}
+      let keys = Object.keys(this.targetNames).filter(k => k.match(this.dropEntry.toLowerCase())).splice(0, 10)
+      for (let key of keys) {
+        list[key] = this.targetNames[key]
+      }
+      this.targetList = list
     }
   }
 }
 </script>
 <style scoped>
+input {
+  text-transform: capitalize
+}
+
 .food-list {
   position: absolute;
   top: 30px;
