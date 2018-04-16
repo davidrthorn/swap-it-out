@@ -1,16 +1,22 @@
 <template>
-  <div style="position: relative; color: indianred">
+  <div style="position: relative">
     <div>
-      <input v-model="dropEntry">
+      <input
+        class="input is-large"
+        v-model="dropEntry"
+        @focus="showList()"
+        @blur="hideList()">
     </div>
     <div
       class="food-list"
-      v-if="showList">
+      v-if="listVisible">
       <div
-        class="drop-item"
+        class="drop-item is-size-5"
         v-for="(value, key) in targetList"
         :key="`drop_${key}`"
-        @click="changeTargetId(value, key)">
+        @click="changeTargetId(value, key)"
+        @mouseover="dropdownHover = true"
+        @mouseleave="dropdownHover = false">
         {{ key | capitalize }}
       </div>
     </div>
@@ -26,7 +32,8 @@ export default {
       targetFoods: targetFoods,
       targetList: {},
       dropEntry: targetFoods[this.$route.params.id].name,
-      showList: true
+      listVisible: false,
+      dropdownHover: false
     }
   },
   computed: {
@@ -42,7 +49,7 @@ export default {
     }
   },
   watch: {
-    showList () {
+    listVisible () {
       this.filterList()
     },
     dropEntry () {
@@ -53,6 +60,19 @@ export default {
     changeTargetId (id, name) {
       this.$emit('targetIdChanged', id)
       this.dropEntry = name
+      this.dropdownHover = false
+    },
+    hideList () {
+      if (this.dropdownHover) {
+        setTimeout(() => {
+          this.listVisible = false
+        }, 300)
+      } else {
+        this.listVisible = false
+      }
+    },
+    showList () {
+      this.listVisible = true
     },
     filterList () {
       let list = {}
@@ -72,18 +92,18 @@ input {
 
 .food-list {
   position: absolute;
-  top: 30px;
+  top: 60px;
   width: 100%;
   background: skyblue;
 }
 
 .drop-item:hover {
-  background: lightgray;
+  background: royalblue;
 }
 
 .drop-item {
-  background: cornsilk;
+  background: skyblue;
   cursor: pointer;
-  padding: 4px;
+  padding: 8px;
 }
 </style>

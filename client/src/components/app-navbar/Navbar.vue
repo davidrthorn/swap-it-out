@@ -5,31 +5,6 @@
     </div>
     <div class="navbar-item">
       <div class="buttons">
-        <div class="dropdown is-hoverable">
-          <div class="dropdown-trigger">
-            <div
-              class="button is-large"
-              :class="{ 'is-primary': targetId === currentId }"
-              @click="changeCurrentId(targetId)">
-              <span>{{ targetFoods[targetId].name | capitalize }}</span>
-              <span style="padding: 0 0 0.5rem 0.6rem">⌄</span>
-            </div>
-          </div>
-          <div
-            class="dropdown-menu"
-            id="dropdown-menu"
-            role="menu">
-            <div class="dropdown-content">
-              <a
-                class="dropdown-item"
-                v-for="(value, key) in targets"
-                :key="'targets_' + key"
-                @click="changeTargetId(key)">
-                {{ value | capitalize }}
-              </a>
-            </div>
-          </div>
-        </div>
         <div
           class="button is-large"
           :class="{ 'is-primary': key === currentId }"
