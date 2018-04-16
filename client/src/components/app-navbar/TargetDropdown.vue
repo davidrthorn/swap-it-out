@@ -2,7 +2,7 @@
   <div style="position: relative">
     <div>
       <input
-        class="input is-large"
+        class="input is-large is-primary is-capitalized"
         v-model="dropEntry"
         @focus="showList()"
         @blur="hideList()">
@@ -11,13 +11,13 @@
       class="food-list"
       v-if="listVisible">
       <div
-        class="drop-item is-size-5"
+        class="drop-item is-size-5 is-capitalized"
         v-for="(value, key) in targetList"
         :key="`drop_${key}`"
         @click="changeTargetId(value, key)"
         @mouseover="dropdownHover = true"
         @mouseleave="dropdownHover = false">
-        {{ key | capitalize }}
+        {{ key }}
       </div>
     </div>
   </div>
@@ -87,22 +87,22 @@ export default {
 </script>
 <style scoped>
 input {
-  text-transform: capitalize
+  width: 15rem;
 }
 
 .food-list {
+  background: white;
+  box-shadow: 1px 1px 1px 1px rgba(200, 200, 200, 0.5);
   position: absolute;
   top: 60px;
   width: 100%;
-  background: skyblue;
 }
 
 .drop-item:hover {
-  background: royalblue;
+  background: rgba(0, 180, 180, 0.2);
 }
 
 .drop-item {
-  background: skyblue;
   cursor: pointer;
   padding: 8px;
 }
