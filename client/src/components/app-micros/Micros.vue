@@ -11,7 +11,10 @@
         <div class="bar-surround">
           <div
             class="bar"
-            :style="{ width: `${value.percentRda}%` }"/>
+            :style="{ width: `${value.percentRda < 100 ? value.percentRda : 100}% ` }"/>
+          <div
+            class="compare"
+            :style="{ width: `${micros[targetId][key].percentRda < 100 ? micros[targetId][key].percentRda : 100}%` }"/>
         </div>
       </div>
     </div>
@@ -41,6 +44,7 @@ export default {
 </script>
 <style scoped>
 .bar-surround {
+  position: relative;
   width: 90%;
   background: #eee;
   height: 26px
@@ -51,7 +55,14 @@ export default {
   height: 100%;
   text-align: center;
   transition: width 500ms ease-out;
-  max-width: 100%
+}
+.compare {
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-right: 2px solid orange;
 }
 .columns {
   margin-top: -0.75rem !important;

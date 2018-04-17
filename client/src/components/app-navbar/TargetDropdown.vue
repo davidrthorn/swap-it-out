@@ -5,19 +5,24 @@
         class="input is-large is-primary is-capitalized"
         v-model="dropEntry"
         @focus="showList()"
-        @blur="hideList()">
+        @blur="hideList()"
+        @keyup.down="changePosition('down')"
+        @keyup.up="changePosition('up')"
+        @keyup.enter="changeTargetId()">
     </div>
     <div
       class="food-list"
-      v-if="listVisible">
+      v-if="listVisible"
+      @mouseover="listHover = true"
+      @mouseleave="listHover = false">
       <div
         class="drop-item is-size-5 is-capitalized"
-        v-for="(value, key) in targetList"
-        :key="`drop_${key}`"
-        @click="changeTargetId(value, key)"
-        @mouseover="dropdownHover = true"
-        @mouseleave="dropdownHover = false">
-        {{ key }}
+        v-for="(item, index) in targetList"
+        :key="`drop_${item}`"
+        :class="{dropHover: listPosition === index}"
+        @mouseover="listPosition = index"
+        @click="changeTargetId()">
+        {{ item }}
       </div>
     </div>
   </div>
@@ -30,10 +35,11 @@ export default {
   data () {
     return {
       targetFoods: targetFoods,
-      targetList: {},
-      dropEntry: targetFoods[this.$route.params.id].name,
+      targetList: [],
+      dropEntry: targetFoods[this.$store.state.targetId].name,
       listVisible: false,
-      dropdownHover: false
+      listHover: false,
+      listPosition: 0
     }
   },
   computed: {
@@ -57,30 +63,36 @@ export default {
     }
   },
   methods: {
-    changeTargetId (id, name) {
+    changeTargetId () {
+      let name = this.targetList[this.listPosition]
+      let id = this.targetNames[name]
       this.$emit('targetIdChanged', id)
       this.dropEntry = name
-      this.dropdownHover = false
+      this.listHover = false
     },
     hideList () {
-      if (this.dropdownHover) {
+      if (this.listHover) {
         setTimeout(() => {
           this.listVisible = false
         }, 300)
       } else {
         this.listVisible = false
       }
+      this.listPosition = 0
     },
     showList () {
       this.listVisible = true
     },
     filterList () {
-      let list = {}
-      let keys = Object.keys(this.targetNames).filter(k => k.match(this.dropEntry.toLowerCase())).splice(0, 10)
-      for (let key of keys) {
-        list[key] = this.targetNames[key]
-      }
-      this.targetList = list
+      this.targetList = Object.keys(this.targetNames).filter(k => k.match(this.dropEntry.toLowerCase())).splice(0, 10)
+    },
+    changePosition (direction) {
+      let length = Object.keys(this.targetList).length - 1
+      let increment = direction === 'down' ? 1 : -1
+      this.listPosition = this.listPosition + increment
+
+      if (this.listPosition >= length) this.listPosition = length
+      if (this.listPosition < 0) this.listPosition = 0
     }
   }
 }
@@ -99,6 +111,10 @@ input {
 }
 
 .drop-item:hover {
+  background: rgba(0, 180, 180, 0.2);
+}
+
+.dropHover {
   background: rgba(0, 180, 180, 0.2);
 }
 
