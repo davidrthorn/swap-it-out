@@ -66,8 +66,10 @@ export default {
     changeTargetId () {
       let name = this.targetList[this.listPosition]
       let id = this.targetNames[name]
+
       this.$emit('targetIdChanged', id)
       this.dropEntry = name
+      this.listPosition = 0
       this.listHover = false
     },
     hideList () {
@@ -78,7 +80,6 @@ export default {
       } else {
         this.listVisible = false
       }
-      this.listPosition = 0
     },
     showList () {
       this.listVisible = true
