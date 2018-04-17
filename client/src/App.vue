@@ -105,10 +105,6 @@ export default {
   margin-top: 1.4rem !important;
 }
 
-.dropdown-trigger .button {
-  margin-right: 0.5rem !important;
-}
-
 .loader-overlay {
   z-index: 1000;
   position: absolute;

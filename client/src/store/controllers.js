@@ -2,7 +2,7 @@
 import targetFoods from '@/data/target-foods.json'
 import rdaValues from '@/data/rda.json'
 
-const microLimit = 6
+const microLimit = 7
 
 export default {
   getDescriptions: getDescriptions,

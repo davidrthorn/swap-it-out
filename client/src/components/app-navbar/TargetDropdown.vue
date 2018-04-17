@@ -36,7 +36,7 @@ export default {
     return {
       targetFoods: targetFoods,
       targetList: [],
-      dropEntry: targetFoods[this.$store.state.targetId].name,
+      dropEntry: targetFoods[this.$route.params.id].name,
       listVisible: false,
       listHover: false,
       listCursorPosition: -1,
@@ -44,6 +44,9 @@ export default {
     }
   },
   computed: {
+    targetId () {
+      return targetFoods[this.$store.state.targetId].name
+    },
     testComp () {
       return this.dropEntry
     },
@@ -70,21 +73,27 @@ export default {
 
       this.$emit('targetIdChanged', id)
       this.dropEntry = name
-      this.listHover = false
       this.hideList()
+      this.listHover = false
     },
     hideList () {
+      let delay = this.listHover ? 300 : 0
+      const resetList = () => {
+        this.listVisible = false
+        this.listKeyPosition = -1
+        this.listCursorPosition = -1
+      }
       if (this.listHover) {
         setTimeout(() => {
-          this.listVisible = false
-        }, 300)
+          resetList()
+        }, delay)
       } else {
-        this.listVisible = false
+        resetList()
+        this.dropEntry = this.targetId
       }
-      this.listKeyPosition = -1
-      this.listCursorPosition = -1
     },
     showList () {
+      this.dropEntry = ''
       this.listVisible = true
     },
     filterList () {

@@ -54,7 +54,7 @@ export default {
   background: #00D1B2;
   height: 100%;
   text-align: center;
-  transition: width 500ms ease-out;
+  transition: width 300ms ease-out;
 }
 .compare {
   box-sizing: border-box;
