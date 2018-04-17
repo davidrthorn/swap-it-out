@@ -8,7 +8,7 @@
         @blur="hideList()"
         @keyup.down="changePosition('down')"
         @keyup.up="changePosition('up')"
-        @keyup.enter="changeTargetId()">
+        @keyup.enter="changeTargetId(listKeyPosition)">
     </div>
     <div
       class="food-list"
@@ -19,9 +19,9 @@
         class="drop-item is-size-5 is-capitalized"
         v-for="(item, index) in targetList"
         :key="`drop_${item}`"
-        :class="{dropHover: listPosition === index}"
-        @mouseover="listPosition = index"
-        @click="changeTargetId()">
+        :class="{cursorHover: index === listCursorPosition, keyHover: index === listKeyPosition}"
+        @mouseover="listCursorPosition = index"
+        @click="changeTargetId(listCursorPosition)">
         {{ item }}
       </div>
     </div>
@@ -39,7 +39,8 @@ export default {
       dropEntry: targetFoods[this.$store.state.targetId].name,
       listVisible: false,
       listHover: false,
-      listPosition: 0
+      listCursorPosition: -1,
+      listKeyPosition: -1
     }
   },
   computed: {
@@ -63,14 +64,14 @@ export default {
     }
   },
   methods: {
-    changeTargetId () {
-      let name = this.targetList[this.listPosition]
+    changeTargetId (index) {
+      let name = this.targetList[index]
       let id = this.targetNames[name]
 
       this.$emit('targetIdChanged', id)
       this.dropEntry = name
-      this.listPosition = 0
       this.listHover = false
+      this.hideList()
     },
     hideList () {
       if (this.listHover) {
@@ -80,20 +81,23 @@ export default {
       } else {
         this.listVisible = false
       }
+      this.listKeyPosition = -1
+      this.listCursorPosition = -1
     },
     showList () {
       this.listVisible = true
     },
     filterList () {
-      this.targetList = Object.keys(this.targetNames).filter(k => k.match(this.dropEntry.toLowerCase())).splice(0, 10)
+      let item = this.dropEntry.toLowerCase()
+      this.targetList = Object.keys(this.targetNames).filter(k => k.includes(item)).splice(0, 10)
     },
     changePosition (direction) {
       let length = Object.keys(this.targetList).length - 1
       let increment = direction === 'down' ? 1 : -1
-      this.listPosition = this.listPosition + increment
+      this.listKeyPosition = this.listKeyPosition + increment
 
-      if (this.listPosition >= length) this.listPosition = length
-      if (this.listPosition < 0) this.listPosition = 0
+      if (this.listKeyPosition >= length) this.listKeyPosition = length
+      if (this.listKeyPosition < 0) this.listKeyPosition = -1
     }
   }
 }
@@ -104,19 +108,20 @@ input {
 }
 
 .food-list {
-  background: white;
-  box-shadow: 1px 1px 1px 1px rgba(200, 200, 200, 0.5);
+  z-index: 1000;
+  background: rgb(250, 250, 250);
+  box-shadow: 2px 2px 2px 2px rgba(200, 200, 200, 0.2);
   position: absolute;
   top: 60px;
   width: 100%;
 }
 
-.drop-item:hover {
+.keyHover {
   background: rgba(0, 180, 180, 0.2);
 }
 
-.dropHover {
-  background: rgba(0, 180, 180, 0.2);
+.cursorHover {
+  color: olivedrab;
 }
 
 .drop-item {
