@@ -58,8 +58,10 @@ function getFoodByID (req, res, next) {
               data: responseData
             })
         })
-        .catch(err => next(err))
     })
-    .catch(err => next(err))
+    .catch(err => {
+      console.log('Could not connect to USDA database')
+      console.log(err)
+    })
 }
 
