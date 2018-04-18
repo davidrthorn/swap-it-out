@@ -11,10 +11,10 @@
         <div class="bar-surround">
           <div
             class="bar"
-            :style="{ width: `${value.percentRda < 100 ? value.percentRda : 100}% ` }"/>
+            :style="{ width: findBarWidth(value)}"/>
           <div
             class="compare"
-            :style="{ width: `${micros[targetId][key].percentRda < 100 ? micros[targetId][key].percentRda : 100}%` }"/>
+            :style="{ width: `findBarWidth(micros[targetId][key])` }"/>
         </div>
       </div>
     </div>
@@ -37,6 +37,17 @@ export default {
     },
     micros () {
       return this.$store.state[this.microType]
+    }
+  },
+  methods: {
+    findBarWidth (micro) {
+      let rda = micro.percentRda
+      let result = rda
+        ? rda < 100
+          ? rda
+          : 100
+        : 0
+      return result + '%'
     }
   }
 
