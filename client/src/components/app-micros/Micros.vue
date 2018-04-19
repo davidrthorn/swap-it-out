@@ -11,10 +11,10 @@
         <div class="bar-surround">
           <div
             class="bar"
-            :style="{ width: findBarWidth(value)}"/>
+            :style="{ width: findBarWidth(value) }"/>
           <div
             class="compare"
-            :style="{ width: `findBarWidth(micros[targetId][key])` }"/>
+            :style="{ width: findBarWidth(micros[targetId][key]) }"/>
         </div>
       </div>
     </div>

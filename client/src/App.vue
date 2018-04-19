@@ -35,7 +35,6 @@
 </template>
 
 <script>
-/* eslint-disable */
 // Components
 import Axios from 'axios'
 
@@ -57,16 +56,16 @@ export default {
     appQual: Qual,
     appCalories: Calories
   },
-  mounted () {
-    let id = this.$route.params.id || '19411'
-    this.changeTargetId(id)
-  },
   data () {
     return {
       targetFoods: targetFoods,
       appReady: false,
       appLoaded: false
     }
+  },
+  mounted () {
+    let id = this.$route.params.id || '19411'
+    this.changeTargetId(id)
   },
   methods: {
     changeTargetId (id) {
@@ -81,6 +80,9 @@ export default {
         this.appReady = true
         this.appLoaded = true
       })
+        .catch(err => {
+          console.log(err)
+        })
     },
     changeCurrentId (id) {
       this.$store.dispatch('changeCurrentId', id)

@@ -4,6 +4,7 @@
       <input
         class="input is-large is-primary is-capitalized"
         v-model="dropEntry"
+        ref="dropInput"
         @focus="showList()"
         @blur="hideList()"
         @keyup.down="changePosition('down')"
@@ -40,11 +41,12 @@ export default {
       listVisible: false,
       listHover: false,
       listCursorPosition: -1,
-      listKeyPosition: -1
+      listKeyPosition: -1,
+      newTargetName: ''
     }
   },
   computed: {
-    targetId () {
+    targetName () {
       return targetFoods[this.$store.state.targetId].name
     },
     testComp () {
@@ -73,23 +75,25 @@ export default {
 
       this.$emit('targetIdChanged', id)
       this.dropEntry = name
+      this.newTargetName = name
       this.hideList()
-      this.listHover = false
+      this.$refs.dropInput.blur()
     },
     hideList () {
-      let delay = this.listHover ? 300 : 0
       const resetList = () => {
         this.listVisible = false
         this.listKeyPosition = -1
         this.listCursorPosition = -1
       }
+
       if (this.listHover) {
         setTimeout(() => {
           resetList()
-        }, delay)
+          this.dropEntry = this.newTargetName
+        }, 300)
       } else {
         resetList()
-        this.dropEntry = this.targetId
+        this.dropEntry = this.newTargetName || this.targetName
       }
     },
     showList () {

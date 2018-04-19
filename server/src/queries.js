@@ -23,7 +23,30 @@ module.exports = {
 }
 
 function getFoodByID (req, res, next) {
+  if (!req.query.foods) {
+    res.status(400)
+      .json({
+        status: 'Failed',
+        message: 'No valid parameters specified in request',
+        code: 'NOVALIDPARAMS'
+      })
+    return
+  }
+
   let foods = req.query.foods.split('_')
+
+  for (let food of foods) {
+    if (food.match(/\d/g).length !== 5) {
+      res.status(400)
+        .json({
+          status: 'Failed',
+          message: 'Invalid food id requested',
+          invalidId: food,
+          code: 'INVALIDID'
+        })
+      return
+    }
+  }
 
   db.any(`
     SELECT
@@ -51,6 +74,18 @@ function getFoodByID (req, res, next) {
       [foods, Object.keys(nutDetails.names)])
         .then(nutData => {
           let responseData = controllers.createResponse(foods, portionData, nutData)
+          for (let id in responseData.foods) {
+            if (!responseData.foods[id].nutrition.protein) {
+              res.status(400)
+                .json({
+                  status: 'Failure',
+                  message: 'Food id not found',
+                  missingId: id,
+                  data: responseData
+                })
+              return
+            }
+          }
           res.status(200)
             .json({
               status: 'Success',
@@ -60,8 +95,16 @@ function getFoodByID (req, res, next) {
         })
     })
     .catch(err => {
-      console.log('Could not connect to USDA database')
       console.log(err)
+      if (err.code === 'ECONNREFUSED') {
+        res.status(500)
+          .json({
+            status: 'Failed',
+            message: 'Could not connect to postgresql server',
+            code: err.code
+          })
+      } else {
+        res.sendStatus(500)
+      }
     })
 }
-
