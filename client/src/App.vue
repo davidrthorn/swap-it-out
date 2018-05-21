@@ -24,8 +24,12 @@
               :micro-type="'minerals'"/>
           </div>
           <div class="columns">
-            <div class="column is-1"/>
-            <app-qual class="column is-10"/>
+            <div class="column">
+              <div class="watch-space">
+                <p>Watch this space</p>
+                <p>Qualitative data will be represented here.</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -115,11 +119,30 @@ export default {
   width: 100vw;
   height: 100vh;
 }
+
 .loader {
   width: 4vw;
   height: 4vw;
   top: 44vh;
   left: 48vw;
+}
+
+.watch-space {
+  border-radius: 6px;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  font-size: 26px;
+  height: 200px;
+  justify-content: center;
+  margin: auto;
+  text-align: center;
+  width: 80%;
+}
+
+.watch-space p:first-child {
+  font-weight: bold;
+  font-size: 40px;
 }
 
 @media screen and (max-width: 558px) {
