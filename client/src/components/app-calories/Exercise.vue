@@ -2,30 +2,30 @@
   <div class="column">
     <div class="columns">
       <div
-        class="column"
         v-for="exercise in exercises"
-        :key="exercise">
+        :key="exercise"
+        class="column">
         <img
           :src="require('./images/' + exercise + '.svg')"
           width="120px">
         <p class="time">
           <animated-number
-            class="is-size-1"
+            v-show="metCalc(exercise)[0]"
             :number="metCalc(exercise)[0]"
             :duration="0.18"
-            v-show="metCalc(exercise)[0]"/>
+            class="is-size-1"/>
           <span
-            class="is-size-1"
-            v-show="metCalc(exercise)[0].length">:</span>
+            v-show="metCalc(exercise)[0].length"
+            class="is-size-1">:</span>
           <animated-number
-            class="is-size-1"
+            v-show="metCalc(exercise)[1]"
             :number="metCalc(exercise)[1]"
             :duration="0.18"
-            v-show="metCalc(exercise)[1]"/>
+            class="is-size-1"/>
           <animated-number
-            class="is-size-1"
             :number="metCalc(exercise)[2]"
-            :duration="0.18"/>
+            :duration="0.18"
+            class="is-size-1"/>
           <span class="is-size-3">{{ metCalc(exercise)[0].length ? 'hr' : 'min' }}</span>
         </p>
       </div>

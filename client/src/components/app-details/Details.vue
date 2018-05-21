@@ -5,8 +5,8 @@
         {{ Math.round(portion) }}g &ndash;
       </span>
       <span
-        class="is-subtitle is-size-3 has-text-grey-dark"
-        :class="{'has-text-grey-light': !details.length, 'is-italic': !details.length}">
+        :class="{'has-text-grey-light': !details.length, 'is-italic': !details.length}"
+        class="is-subtitle is-size-3 has-text-grey-dark">
         {{ details.length ? details.toLowerCase() : 'no further details' }}
       </span>
     </div>

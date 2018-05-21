@@ -1,21 +1,20 @@
 <template>
   <div>
     <div
-      class="columns is-mobile"
       v-for="macro in quantMacros"
-      :key="macro">
+      :key="macro"
+      class="columns is-mobile">
       <div class="column is-2 is-size-5">
         {{ macro | capitalize }}
       </div>
       <div class="column">
         <div class="bar-surround">
           <div
-            class="bar"
             :style="{
               width: macros[currentId][macro] + '%',
               background: macro == 'fibre' ? '#00D1B2' : 'indianred'
             }"
-          />
+            class="bar"/>
         </div>
       </div>
     </div>

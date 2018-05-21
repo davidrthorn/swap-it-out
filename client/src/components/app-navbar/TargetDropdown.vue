@@ -2,9 +2,9 @@
   <div style="position: relative">
     <div>
       <input
-        class="input is-large is-primary is-capitalized"
-        v-model="dropEntry"
         ref="dropInput"
+        v-model="dropEntry"
+        class="input is-large is-primary is-capitalized"
         @focus="showList()"
         @blur="hideList()"
         @keyup.down="changePosition('down')"
@@ -12,15 +12,15 @@
         @keyup.enter="changeTargetId(listKeyPosition)">
     </div>
     <div
-      class="food-list"
       v-if="listVisible"
+      class="food-list"
       @mouseover="listHover = true"
       @mouseleave="listHover = false">
       <div
-        class="drop-item is-size-5 is-capitalized"
         v-for="(item, index) in targetList"
         :key="`drop_${item}`"
         :class="{cursorHover: index === listCursorPosition, keyHover: index === listKeyPosition}"
+        class="drop-item is-size-5 is-capitalized"
         @mouseover="listCursorPosition = index"
         @click="changeTargetId(listCursorPosition)">
         {{ item }}

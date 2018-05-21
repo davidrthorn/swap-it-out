@@ -1,10 +1,10 @@
 <template>
   <div
-    id="app"
-    v-if="appLoaded">
+    v-if="appLoaded"
+    id="app">
     <div
-      class="loader-overlay"
-      v-if="!appReady">
+      v-if="!appReady"
+      class="loader-overlay">
       <div class="loader"/>
     </div>
     <div class="container is-fluid">
@@ -17,11 +17,11 @@
         <div class="column">
           <div class="columns">
             <app-micros
-              class="column"
-              :micro-type="'vitamins'"/>
+              :micro-type="'vitamins'"
+              class="column"/>
             <app-micros
-              class="column"
-              :micro-type="'minerals'"/>
+              :micro-type="'minerals'"
+              class="column"/>
           </div>
           <div class="columns">
             <div class="column is-1"/>
