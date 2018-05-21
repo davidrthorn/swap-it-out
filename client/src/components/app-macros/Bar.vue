@@ -1,10 +1,10 @@
 <template>
   <div class="bar-chart">
     <div
-      class="chart-row"
       v-for="n in rows"
       :key="'row' + n"
-      :style="{ height: rowHeight + '%'}">
+      :style="{ height: rowHeight + '%'}"
+      class="chart-row">
       <div class="y-label"><p>{{ (rows + 1 - n) * 10 }}g</p></div>
       <div class="rows">
         <div class="row"/>
@@ -12,14 +12,14 @@
       </div>
     </div>
     <div
-      class="chart-row"
-      :style="{ height: rowHeight + '%'}">
+      :style="{ height: rowHeight + '%'}"
+      class="chart-row">
       <div class="y-label"><p>0g</p></div>
       <div class="rows">
         <div class="row"/>
         <div
-          class="row"
-          id="x-row">
+          id="x-row"
+          class="row">
           <div class="x-label">Fat</div>
           <div class="x-label">Protein</div>
           <div class="x-label">Carbs</div>
@@ -27,42 +27,42 @@
       </div>
     </div>
     <div
-      class="bar"
       id="fat-bar"
-      :style="{ height: `${barHeight(totalFatCurrent)}%`, bottom: `${rowHeight / 2}%` }">
+      :style="{ height: `${barHeight(totalFatCurrent)}%`, bottom: `${rowHeight / 2}%` }"
+      class="bar">
       <div
+        :style="{ height: `${100 * macros[currentId].saturated / totalFatCurrent}%` }"
         class="sub-fat"
-        style="background: lightcoral"
-        :style="{ height: `${100 * macros[currentId].saturated / totalFatCurrent}%` }"/>
+        style="background: lightcoral"/>
       <div
+        :style="{ height: `${100 * macros[currentId].monounsaturated / totalFatCurrent}%` }"
         class="sub-fat"
-        style="background: skyblue"
-        :style="{ height: `${100 * macros[currentId].monounsaturated / totalFatCurrent}%` }"/>
+        style="background: skyblue"/>
       <div
+        :style="{ height: `${100 * macros[currentId].polyunsaturated / totalFatCurrent}%` }"
         class="sub-fat"
-        style="background: lightsalmon"
-        :style="{ height: `${100 * macros[currentId].polyunsaturated / totalFatCurrent}%` }"/>
+        style="background: lightsalmon"/>
     </div>
     <div
-      class="reference"
       id="fat-reference"
-      :style="{ bottom: `${rowHeight / 2 + barHeight(totalFatInitial)}%` }"/>
+      :style="{ bottom: `${rowHeight / 2 + barHeight(totalFatInitial)}%` }"
+      class="reference"/>
     <div
-      class="bar"
       id="protein-bar"
-      :style="{ height: `${barHeight(macros[currentId].protein)}%`, bottom: `${rowHeight / 2}%` }"/>
+      :style="{ height: `${barHeight(macros[currentId].protein)}%`, bottom: `${rowHeight / 2}%` }"
+      class="bar"/>
     <div
-      class="reference"
       id="protein-reference"
-      :style="{ bottom: `${rowHeight / 2 + barHeight(macros[targetId].protein)}%` }"/>
+      :style="{ bottom: `${rowHeight / 2 + barHeight(macros[targetId].protein)}%` }"
+      class="reference"/>
     <div
-      class="bar"
       id="carb-bar"
-      :style="{ height: `${barHeight(macros[currentId].carbs)}%`, bottom: `${rowHeight / 2}%` }"/>
+      :style="{ height: `${barHeight(macros[currentId].carbs)}%`, bottom: `${rowHeight / 2}%` }"
+      class="bar"/>
     <div
-      class="reference"
       id="carb-reference"
-      :style="{ bottom: `${rowHeight / 2 + barHeight(macros[targetId].carbs)}%` }"/>
+      :style="{ bottom: `${rowHeight / 2 + barHeight(macros[targetId].carbs)}%` }"
+      class="reference"/>
 
   </div>
 </template>

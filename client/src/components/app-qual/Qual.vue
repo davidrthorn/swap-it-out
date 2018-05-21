@@ -1,9 +1,9 @@
 <template>
   <div class="tags">
     <span
-      class="tag is-medium is-info"
       v-for="(item, index) in list"
-      :key="index">
+      :key="index"
+      class="tag is-medium is-info">
       {{ item }}
     </span>
   </div>

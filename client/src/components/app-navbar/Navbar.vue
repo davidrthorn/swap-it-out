@@ -6,10 +6,10 @@
     <div class="navbar-item">
       <div class="buttons">
         <div
-          class="button is-large"
-          :class="{ 'is-primary': key === currentId }"
           v-for="(value, key) in swaps"
+          :class="{ 'is-primary': key === currentId }"
           :key="'current_' + key"
+          class="button is-large"
           @click="changeCurrentId(key)">
           {{ value.name | capitalize }}
         </div>

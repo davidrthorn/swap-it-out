@@ -1,7 +1,7 @@
 <template>
   <div class="columns has-text-centered">
     <div
-    class="column is-2">
+      class="column is-2">
       <p
         class="is-title is-size-1"
         style="font-size: 6em !important">
@@ -16,12 +16,12 @@
       </p>
     </div>
     <div
-    class="column is-3">
+      class="column is-3">
       <bmr-calc
-      :calories="calories"/>
+        :calories="calories"/>
     </div>
     <exercise-calc
-    :calories="calories"/>
+      :calories="calories"/>
   </div>
 </template>
 
