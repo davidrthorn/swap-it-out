@@ -99,6 +99,10 @@ export default {
 @import './css/custom.sass';
 @import '~bulma/bulma.sass';
 
+body {
+  background: darksalmon;
+}
+
 .columns {
   margin: 0 !important;
 }
