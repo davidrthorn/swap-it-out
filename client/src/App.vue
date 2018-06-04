@@ -13,7 +13,7 @@
         @targetIdChanged="changeTargetId($event)"/>
       <app-details class="details"/>
       <div class="columns">
-        <app-macros class="column is-5"/>
+        <app-macros class="column is-4"/>
         <div class="column">
           <div class="columns">
             <app-micros
@@ -75,7 +75,7 @@ export default {
     changeTargetId (id) {
       this.appReady = false
       let foods = [id, ...this.targetFoods[id].swaps].join('_')
-      Axios.get(`http://localhost:8081/api/food?foods=${foods}`).then(res => {
+      Axios.get(`http://100.115.92.203:8081/api/food?foods=${foods}`).then(res => {
         let data = res.data.data
         data.targetId = id
         data.currentId = id
@@ -99,8 +99,8 @@ export default {
 @import './css/custom.sass';
 @import '~bulma/bulma.sass';
 
-body {
-  background: darksalmon;
+html {
+  background: ghostwhite;
 }
 
 .columns {

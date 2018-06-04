@@ -71,7 +71,7 @@ export default {
 
 .navbar {
   padding: 1rem 0 0.5rem 1rem;
-  background: whitesmoke;
+  background: ghostwhite !important;
 }
 
 .dropdown-trigger .button {
