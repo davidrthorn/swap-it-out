@@ -75,7 +75,7 @@ export default {
     changeTargetId (id) {
       this.appReady = false
       let foods = [id, ...this.targetFoods[id].swaps].join('_')
-      Axios.get(`http://localhost:8081/api/food?foods=${foods}`).then(res => {
+      Axios.get(`https://swapitout.davidrowthorn.net/api/food?foods=${foods}`).then(res => {
         let data = res.data.data
         data.targetId = id
         data.currentId = id
