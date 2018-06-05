@@ -51,6 +51,8 @@ import Calories from './components/app-calories/Calories.vue'
 
 import targetFoods from '@/data/target-foods.json'
 
+const apiAddress = process.env.API_ADDRESS
+
 export default {
   components: {
     appNavbar: Navbar,
@@ -75,7 +77,7 @@ export default {
     changeTargetId (id) {
       this.appReady = false
       let foods = [id, ...this.targetFoods[id].swaps].join('_')
-      Axios.get(`https://swapitout.davidrowthorn.net/api/food?foods=${foods}`).then(res => {
+      Axios.get(`${apiAddress}/api/food?foods=${foods}`).then(res => {
         let data = res.data.data
         data.targetId = id
         data.currentId = id
