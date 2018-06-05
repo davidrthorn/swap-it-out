@@ -102,7 +102,7 @@ export default {
     },
     filterList () {
       let item = this.dropEntry.toLowerCase()
-      this.targetList = Object.keys(this.targetNames).filter(k => k.includes(item)).splice(0, 10)
+      this.targetList = Object.keys(this.targetNames).filter(k => k.includes(item)).splice(0, 10).sort()
     },
     changePosition (direction) {
       let length = Object.keys(this.targetList).length - 1

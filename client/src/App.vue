@@ -13,7 +13,7 @@
         @targetIdChanged="changeTargetId($event)"/>
       <app-details class="details"/>
       <div class="columns">
-        <app-macros class="column is-5"/>
+        <app-macros class="column is-4"/>
         <div class="column">
           <div class="columns">
             <app-micros
@@ -100,6 +100,10 @@ export default {
 <style lang="scss">
 @import './css/custom.sass';
 @import '~bulma/bulma.sass';
+
+html {
+  background: ghostwhite;
+}
 
 .columns {
   margin: 0 !important;

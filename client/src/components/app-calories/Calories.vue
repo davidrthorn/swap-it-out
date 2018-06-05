@@ -15,11 +15,6 @@
         CALORIES
       </p>
     </div>
-    <div
-      class="column is-3">
-      <bmr-calc
-        :calories="calories"/>
-    </div>
     <exercise-calc
       :calories="calories"/>
   </div>
